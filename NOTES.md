@@ -166,3 +166,129 @@ Rejected: a system-wide daily cap (the unit becomes an organisation, not a
 person's attention) and a top-X% framing (unit-free, but loses the concrete
 "how many interruptions" answer a pharmacy lead is actually asking for).
 
+---
+
+## Stage 2 — Reference data
+
+### DDInter
+
+**Licence, verified 2026-09-07: CC BY-NC-SA 4.0**, not "open access" without
+qualification. Non-commercial and ShareAlike. Consequences honoured here: the
+raw download is never committed, `src/ingest/fetch_ddinter.py` and a manifest
+carrying attribution are committed instead, and the derived interaction tables
+in `outputs/` are marked with the source. Fine for a non-commercial portfolio
+project; would need renegotiating for anything else.
+
+**The download page under-advertises the data.** It links eight ATC-letter CSVs
+(A, B, D, H, L, P, R, V). Six more — **C, G, J, M, N, S** — are served from the
+same URL pattern but are not linked anywhere on the page. They are not
+marginal: N (nervous system, 91,595 rows) and C (cardiovascular, 60,454 rows)
+are the two largest files, and between them cover most of what this cohort is
+actually prescribed — lisinopril, amlodipine, HCTZ, simvastatin, hydrocodone.
+
+Taking the download page at face value would have produced an alert set missing
+the majority of relevant interactions, and nothing in the output would have
+looked wrong. The burden numbers would simply have been quietly, plausibly too
+low. `fetch_ddinter.py` requests all fourteen letters and validates each
+response on its header row, because the server answers 200 for absent files.
+
+**Consolidated reference standard:** 507,655 raw rows across 14 files →
+**234,981 distinct unordered pairs** after canonicalising each pair to
+(low ID, high ID). **Zero pairs carry conflicting severities** across files, so
+the reference standard is at least internally consistent.
+
+| Severity | Pairs | Share |
+|---|---:|---:|
+| Moderate | 143,748 | 61.17% |
+| **Unknown** | **42,415** | **18.05%** |
+| Major | 39,082 | 16.63% |
+| Minor | 9,736 | 4.14% |
+
+**`Unknown` at 18% was not anticipated and needs an explicit rule.** Policy B is
+specified as "interrupt major, passive moderate, suppress minor" — it has no
+branch for nearly a fifth of the knowledge base. Deferred to `eval/criteria.md`
+so the decision is fixed in writing before any policy runs. Whatever is chosen,
+suppressing Unknown and counting it as burden avoided would be a way of
+manufacturing a good result.
+
+### RxNorm
+
+**No UMLS account is needed.** The plan budgeted for one. Synthea's
+`medications.csv` CODE is already RxNorm at clinical-drug level, and RxNav's
+public REST API resolves it to ingredients with no key and no registration.
+Dependency dropped.
+
+**All 245 distinct codes resolved, covering 58,803/58,803 prescriptions (100%).**
+That required two fixes:
+
+*Grouping bug, caught and corrected.* The first version grouped products by
+(CODE, DESCRIPTION) while keying results by CODE. Seven codes carry two
+description strings in this cohort, so those products split into two rows and
+the second silently overwrote the first — reported as "240/252 resolved,
+93.23% coverage" when the true figure was different. Both the numerator and the
+denominator were wrong, and the output looked entirely plausible. Now grouped by
+CODE with descriptions aggregated.
+
+*Five retired RxCUIs.* `897685, 757594, 1723208, 749882, 105078` return nothing
+from `/related`, `/allrelated` or `/properties` — they have been withdrawn from
+RxNorm since Synthea's snapshot. 897685 is **verapamil**, a CYP3A4 inhibitor,
+and alone accounts for 230 of the 231 affected prescriptions in the analysis
+window. Resolved by an explicit five-row override table with ingredient RxCUIs
+confirmed by name lookup, rather than by parsing description strings. Dropping
+them would have shrunk the alert set in precisely the direction that flatters
+burden figures.
+
+**173 distinct ingredients; 39 combination products.**
+
+### The RxNorm → DDInter join, and what it costs
+
+RxNorm uses United States Adopted Names, DDInter uses International
+Nonproprietary Names. Exact matching alone gives 149/172 ingredients but only
+**58.2%** of prescriptions, because the highest-volume drugs are precisely the
+ones whose names differ: albuterol/Salbutamol, aspirin/Acetylsalicylic acid,
+alendronate/Alendronic acid, norethindrone/Norethisterone,
+insulin isophane/`Insulin human (isophane)`.
+
+Sixteen hand-checked synonym rows lift coverage to **82.0% of prescriptions
+(165/172 ingredients)**. Rejected: fuzzy string matching. It would have mapped
+`epoetin alfa` onto `Darbepoetin alfa` — a different drug with a different
+interaction profile — and produced alerts indistinguishable from real ones.
+Every mapping is exact and one line long so it can be audited.
+
+Denominator note: these percentages are over 68,505 ingredient-prescription
+rows, not 58,803 prescriptions, because a combination product contributes one
+row per ingredient.
+
+**A hard ceiling on the analysis.** 12,310 ingredient-prescriptions (18.0%)
+involve drugs genuinely absent from DDInter and can never generate an alert
+under any policy:
+
+| Ingredient | Rows | Why |
+|---|---:|---|
+| **epoetin alfa** | **8,760** | No epoetin entry at all. DDInter has only Darbepoetin alfa. |
+| sodium fluoride | 3,108 | No fluoride entry. Dental gel — arguably non-systemic anyway. |
+| inert ingredients | 391 | Not a drug; artefact of Synthea's contraceptive pack descriptions. |
+| protamine sulfate (USP) | 34 | Only appears inside combination insulin names. |
+| tenofovir disoproxil / alafenamide | 16 | No tenofovir entry; only Adefovir dipivoxil, Cidofovir. |
+| norethynodrel | 1 | Absent at any spelling. |
+
+Epoetin alfa is the **single most-prescribed product in the cohort** and has
+zero interaction coverage. This is a limitation of the reference standard, not
+of the detection code, and it belongs in README section 6: any claim about
+"total alert burden" here is a claim about the 82% of prescribing that DDInter
+can see.
+
+### Route, and a trap being set for Stage 3
+
+Ingredient-level normalisation destroys route. 13.4% of prescriptions are
+plausibly non-systemic — inhalation 5.79%, dental gel 5.29%, ophthalmic 1.33%,
+topical 0.51%. Treating an eye drop or a fluoride gel as systemic exposure
+manufactures interactions that cannot physically occur.
+
+Usefully, **DDInter names carry route qualifiers themselves** — 169 entries such
+as `Dorzolamide (ophthalmic)`, `Estradiol (topical)`,
+`Beclomethasone dipropionate (nasal)`. So route is partly recoverable on the
+reference side. A route flag is carried through from the product description so
+Stage 3 can *measure* how many alerts depend on non-systemic exposure rather
+than assuming the question away.
+
