@@ -1,0 +1,2 @@
+window_start,window_end,window_days,prescriptions,patients,practices,patient_prescribing_days,alerts,alerts_per_patient_prescribing_day,patients_with_alert,distinct_pairs,top1_pair_pct,top5_pair_pct,top10_pair_pct,pairs_generating_80pct,pct_of_pairs_generating_80pct,repeat_alert_share_pct,nonsystemic_involved_pct,normalisation_checks_passed
+2021-09-07,2026-09-07,1826,20922,951,472,11655,36929,3.169,524,580,4.7,18.8,28.2,90,15.5,91.8,19.5,True
