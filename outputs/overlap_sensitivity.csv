@@ -1,0 +1,6 @@
+overlap_rule,alerts,alerts_per_patient_prescribing_day,distinct_pairs,patients_with_alert,major,moderate,minor,unknown,intra_product_excluded,prescriptions_in_window,patients_in_window,patient_prescribing_days
+assume_active,36929,3.169,580,524,1938,11960,2350,20681,0,20922,951,11655
+assume_90d,18576,1.594,341,434,639,6446,1689,9802,0,20922,951,11655
+assume_30d,18416,1.58,330,432,636,6411,1683,9686,0,20922,951,11655
+assume_point,18042,1.548,307,426,631,6358,1667,9386,0,20922,951,11655
+same_day_only,15230,1.307,164,282,662,6569,1624,6375,0,20922,951,11655
