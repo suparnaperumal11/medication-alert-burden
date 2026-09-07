@@ -133,3 +133,36 @@ Combination products are present and will need handling at ingredient level —
 e.g. `Acetaminophen 300 MG / Hydrocodone Bitartrate 5 MG Oral Tablet` and
 `insulin isophane human 70 / insulin regular human 30 [Humulin]`.
 
+### ✅ DECISION POINT 1 — resolved
+
+**Denominator: alerts per patient-prescribing-day, primary. Provider retained as
+a concentration axis only.**
+
+The planned fallback ladder was prescriber ID → encounter provider →
+organisation → patient-day. Rung 1 does not exist in the data. Rungs 2 and 3 are
+the same partition as each other (817 providers, 817 organizations, 1:1, all
+general practice). Rung 2/3 is 100% populated and could have been used, and that
+is the trap: it would have produced a clean-looking `alerts per prescriber-day`
+for a prescriber who is active on a median of 8 days in five years and writes
+1.83 orders on each. Computable, reproducible, and a fabrication. Went to rung 4.
+
+Provider is still used, but only to answer *"is burden concentrated across
+practices?"* — a question the data can support. It is never used as a workload
+rate. Any figure with a per-prescriber denominator is out of scope for this
+project by decision, not by oversight.
+
+**Analysis window: 2021-09-07 to 2026-09-07 (five years, 1,826 days).**
+Fixed before any alert logic was written. Contains 20,928 prescriptions, 951
+patients, 472 providers, 11,659 patient-prescribing-days. Rejected: all-time
+(divides by 92 years of near-empty simulated history) and last-3-years (thinner
+cells for the Stage 8 subgroup analysis).
+
+**Alert budget expressed per patient-prescribing-day.** Stage 7's table was
+specified as alerts/day against one prescriber's attention. With the prescriber
+unit unusable, the budget is instead "at most N alerts may fire while this
+patient is being prescribed for". This keeps the clinical reading intact — a
+prescriber attends to one patient at a time — without inventing a workload.
+Rejected: a system-wide daily cap (the unit becomes an organisation, not a
+person's attention) and a top-X% framing (unit-free, but loses the concrete
+"how many interruptions" answer a pharmacy lead is actually asking for).
+
