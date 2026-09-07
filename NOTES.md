@@ -292,3 +292,140 @@ reference side. A route flag is carried through from the product description so
 Stage 3 can *measure* how many alerts depend on non-systemic exposure rather
 than assuming the question away.
 
+---
+
+## Stage 3 — Alert generation (Policy A, the naive set)
+
+### The alert model, and why it is not per-day
+
+**An alert fires at the moment of prescribing, once per (triggering
+prescription, interacting pair).** Not once per overlapping day, and not once
+per overlapping prescription.
+
+*Not per day*: the resource being budgeted is clinician attention, and the
+clinician is interrupted when they write the order. One alert per day of
+overlap would measure exposure rather than interruption, and would inflate
+burden by whatever factor prescription durations happen to have.
+
+*Not per overlapping prescription*: a patient with five active refills of
+lisinopril has one lisinopril interaction, not five. Counting rows here would
+measure repeat dispensing and call it alert burden. The collapse is done in
+SQL with `COUNT(DISTINCT concurrent_rx_id)` retained on each alert, so the
+number of prescriptions behind each alert stays inspectable.
+
+Self-pairs (a drug against itself) are excluded — refills and dose changes
+overlap constantly. Intra-product pairs are excluded and counted separately:
+the two ingredients of a licensed combination tablet are co-formulated on
+purpose, so warning about them is noise by construction.
+
+### The overlap assumption is the weakest joint, and it moves burden 2×
+
+Synthea's `STOP` is null for 4.87% of prescriptions, meaning "still active".
+Concurrency therefore rests on an assumption, so the rule is a parameter and
+every variant is reported:
+
+| Overlap rule | Alerts | vs primary | Major | Distinct pairs |
+|---|---:|---:|---:|---:|
+| **assume_active** (primary) | **36,929** | 100.0% | 1,938 | 580 |
+| assume_90d | 18,576 | 50.3% | 639 | 341 |
+| assume_30d | 18,416 | 49.9% | 636 | 330 |
+| assume_point | 18,042 | 48.9% | 631 | 307 |
+| same_day_only | 15,230 | 41.2% | 662 | 164 |
+
+**4.87% of prescriptions determine 50% of the alert burden.** Under
+`assume_active` a null-STOP prescription stays live to the end of the window,
+so every chronic medication interacts with everything subsequently prescribed —
+which is clinically true and is also why the number is so assumption-sensitive.
+`assume_active` is primary because it matches Synthea's own semantics, but no
+burden figure in this project should be quoted without it.
+
+Note the major-severity count barely moves between the bounded rules (631–662)
+while total burden moves by 3,300. The assumption inflates *noise* far more
+than it inflates the alerts that matter.
+
+---
+
+## Stage 4 — Burden (headline, before any prioritisation)
+
+All normalisation sanity checks passed before concentration was reported: no
+self-pairs, no non-canonical orderings, no duplicate (trigger, pair) rows, no
+unmapped names. The top pairs are distinct ingredients, not one drug matched
+against itself under two spellings.
+
+### Headline
+
+**36,929 alerts across 20,922 prescriptions, 951 patients and 472 practices
+over 1,826 days — 3.17 alerts per patient-prescribing-day**, 1.77 per
+prescription, 38.8 per patient over five years. 524 patients (55.1% of those
+prescribed for) got at least one. 580 distinct interacting pairs.
+
+### Severity — and a problem for Policy B
+
+| Severity | Alerts | Share | Per patient-prescribing-day |
+|---|---:|---:|---:|
+| **Unknown** | **20,681** | **56.0%** | 1.774 |
+| Moderate | 11,960 | 32.4% | 1.026 |
+| Minor | 2,350 | 6.4% | 0.202 |
+| Major | 1,938 | 5.2% | 0.166 |
+
+`Unknown` was 18% of the DDInter knowledge base but is **56% of the realised
+alert set** — the drugs this cohort actually co-prescribes are
+disproportionately ones DDInter has not graded. Policy B is specified as
+"interrupt major, passive moderate, suppress minor" and has no branch for the
+majority of its own input. This must be settled in `eval/criteria.md` before
+any policy runs.
+
+### Concentration — weaker here than the literature, and that is the finding
+
+| | Share of all alerts |
+|---|---:|
+| Top 1 pair | 4.7% |
+| Top 5 pairs | 18.8% |
+| Top 10 pairs | 28.2% |
+| Top 20 pairs | 40.7% |
+
+**90 pairs — 15.5% of the 580 distinct pairs — generate 80% of alerts.**
+
+The published figure motivating this project was a single pair producing 49.8%
+of all alerts at one hospital. Here the top pair produces 4.7%. **The
+concentration is real but roughly an order of magnitude flatter**, and the
+honest reading is that this is a property of Synthea rather than a
+contradiction of the literature: a 245-product formulary prescribed to
+guidelines cannot produce the long tail of a real hospital, and it has no
+equivalent of the one badly-configured rule that generates half a real system's
+alerts. Reported as a limitation, not as a softer version of the published
+result.
+
+Top pairs are clinically coherent — hydrochlorothiazide with insulin (thiazides
+raise blood glucose), amlodipine with hydrochlorothiazide, lisinopril with
+metoprolol — which is corroboration that the pipeline works, not a finding.
+
+### Repeat exposure — this is the actual headline
+
+**3,044 distinct (patient, pair) combinations generate 36,929 alerts. 91.8% of
+all alerts are a repetition of a warning that patient has already received.**
+Mean 12.1 repeats of the same warning to the same patient; median 3; **max
+350**.
+
+This is the "hundred distinct alerts versus the same three warnings a hundred
+times" question, and the answer is emphatically the latter. It is the strongest
+result in the project and it is what makes Policy C worth testing: the burden
+is dominated not by breadth of interactions but by re-notification of
+interactions already seen and evidently already tolerated.
+
+### Concentration across practices
+
+408 of 472 prescribing practices generated at least one alert. Median 23 alerts
+per practice, p90 167, max 3,274. **Top 10 practices account for 39.5%, top 50
+for 71.0%.** Reported as concentration only — never as a per-prescriber rate,
+per Decision Point 1.
+
+### Route — a measurable false-positive source
+
+**19.5% of alerts (7,201) have a non-systemic drug on at least one side**, of
+which 358 are major severity. The largest contributor is inhaled-with-systemic
+at 3,469. Ingredient-level normalisation cannot distinguish an inhaled
+corticosteroid from an oral one, so a fifth of this burden rests on exposure
+that may not be systemic. Quantified rather than assumed away, and available as
+a prioritisation feature in Stage 6.
+

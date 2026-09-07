@@ -1,0 +1,5 @@
+severity,alerts,pct,per_patient_prescribing_day
+Unknown,20681,56.0,1.774
+Moderate,11960,32.4,1.026
+Minor,2350,6.4,0.202
+Major,1938,5.2,0.166

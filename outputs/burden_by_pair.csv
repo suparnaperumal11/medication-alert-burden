@@ -1,0 +1,581 @@
+pair_lo,pair_hi,alerts,cum_pct
+Hydrochlorothiazide,Insulin human (regular),1742,4.7
+Hydrochlorothiazide,Insulin human (isophane),1741,9.4
+Amlodipine,Hydrochlorothiazide,1609,13.8
+Metformin,Simvastatin,933,16.3
+Lisinopril,Simvastatin,925,18.8
+Metformin,Nitroglycerin,711,20.7
+Lisinopril,Metoprolol,707,22.7
+Metformin,Metoprolol,704,24.6
+Lisinopril,Nitroglycerin,684,26.4
+Clopidogrel,Hydrochlorothiazide,650,28.2
+Lisinopril,Metformin,620,29.9
+Acetaminophen,Simvastatin,576,31.4
+Alendronic acid,Amlodipine,541,32.9
+Lisinopril,Oxycodone,490,34.2
+Acetaminophen,Amlodipine,449,35.4
+Acetaminophen,Salbutamol,429,36.6
+Acetaminophen,Hydrochlorothiazide,406,37.7
+Simvastatin,Tacrolimus,401,38.8
+Verapamil,Warfarin,372,39.8
+Metoprolol,Tacrolimus,354,40.7
+Tacrolimus,Warfarin,350,41.7
+Alendronic acid,Digoxin,350,42.6
+Tacrolimus,Verapamil,350,43.6
+Nitroglycerin,Tacrolimus,340,44.5
+Lisinopril,Naproxen,338,45.4
+Alendronic acid,Hydrochlorothiazide,336,46.3
+Oxycodone,Salbutamol,335,47.2
+Acetaminophen,Fluticasone,330,48.1
+Lisinopril,Salbutamol,330,49.0
+Acetylsalicylic acid,Alendronic acid,306,49.8
+Acetylsalicylic acid,Insulin human (regular),302,50.7
+Acetylsalicylic acid,Insulin human (isophane),302,51.5
+Acetaminophen,Ibuprofen,293,52.3
+Salbutamol,Salmeterol,292,53.1
+Metoprolol,Warfarin,278,53.8
+Simvastatin,Warfarin,277,54.6
+Nitroglycerin,Warfarin,276,55.3
+Prasugrel,Warfarin,271,56.1
+Galantamine,Hydrochlorothiazide,261,56.8
+Fentanyl,Hydrocodone,253,57.4
+Acetaminophen,Fentanyl,246,58.1
+Metoprolol,Simvastatin,236,58.8
+Oxycodone,Simvastatin,230,59.4
+Nitroglycerin,Simvastatin,227,60.0
+Hydrocortisone,Insulin human (isophane),217,60.6
+Hydrocortisone,Insulin human (regular),217,61.2
+Acetylsalicylic acid,Amlodipine,215,61.7
+Cyanocobalamin,Hydrochlorothiazide,211,62.3
+Amlodipine,Hydrocodone,210,62.9
+Simvastatin,Tropicamide,205,63.4
+Hydrochlorothiazide,Hydrocodone,203,64.0
+Acetaminophen,Tramadol,198,64.5
+Cisplatin,Hydrochlorothiazide,197,65.1
+Etoposide,Hydrochlorothiazide,197,65.6
+Salbutamol,Warfarin,192,66.1
+Salmeterol,Warfarin,192,66.6
+Alendronic acid,Fluticasone,184,67.1
+Metoprolol,Verapamil,181,67.6
+Nitroglycerin,Verapamil,181,68.1
+Acetylsalicylic acid,Digoxin,181,68.6
+Simvastatin,Verapamil,180,69.1
+Acetaminophen,Chlorpheniramine,179,69.6
+Naproxen,Oxycodone,178,70.1
+Naproxen,Tacrolimus,176,70.5
+Nebivolol,Verapamil,175,71.0
+Naproxen,Verapamil,175,71.5
+Acetaminophen,Clopidogrel,175,72.0
+Tacrine,Verapamil,175,72.4
+Naproxen,Warfarin,175,72.9
+Acetaminophen,Epinephrine,172,73.4
+Codeine,Hydrocodone,171,73.8
+Chlorpheniramine,Hydrocodone,159,74.3
+Naproxen,Salbutamol,155,74.7
+Lisinopril,Tacrolimus,148,75.1
+Salbutamol,Simvastatin,146,75.5
+Acetaminophen,Cisplatin,129,75.8
+Cisplatin,Fentanyl,129,76.2
+Amlodipine,Ibuprofen,125,76.5
+Budesonide,Epinephrine,124,76.9
+Metoprolol,Salbutamol,121,77.2
+Nitroglycerin,Salbutamol,121,77.5
+Salmeterol,Simvastatin,119,77.8
+Alendronic acid,Hydrocortisone,114,78.1
+Acetaminophen,Cyanocobalamin,112,78.4
+Lisinopril,Tramadol,112,78.7
+Clopidogrel,Fluticasone,111,79.0
+Alendronic acid,Galantamine,109,79.3
+Loratadine,Salbutamol,108,79.6
+Metoprolol,Salmeterol,104,79.9
+Losartan,Salbutamol,104,80.2
+Losartan,Metformin,104,80.5
+Nitroglycerin,Salmeterol,104,80.8
+Codeine,Fentanyl,104,81.0
+Acetylsalicylic acid,Fluticasone,103,81.3
+Atorvastatin,Warfarin,102,81.6
+Losartan,Warfarin,96,81.9
+Codeine,Hydrochlorothiazide,96,82.1
+Metoprolol,Oxycodone,95,82.4
+Nitroglycerin,Oxycodone,95,82.6
+Atorvastatin,Salbutamol,94,82.9
+Amlodipine,Hydrocortisone,94,83.1
+Atorvastatin,Fluticasone,94,83.4
+Atorvastatin,Salmeterol,94,83.6
+Memantine,Salmeterol,92,83.9
+Losartan,Salmeterol,92,84.1
+Memantine,Salbutamol,92,84.4
+Memantine,Warfarin,92,84.6
+Alendronic acid,Donepezil,92,84.9
+Donepezil,Fluticasone,92,85.1
+Acetaminophen,Ethinylestradiol,91,85.4
+Metformin,Nicotine,91,85.6
+Hydrochlorothiazide,Hydrocortisone,89,85.9
+Furosemide,Hydrochlorothiazide,87,86.1
+Acetaminophen,Budesonide,87,86.3
+Doxycycline,Hydrochlorothiazide,86,86.6
+Epinephrine,Fluticasone,84,86.8
+Naproxen,Simvastatin,84,87.0
+Oxycodone,Tramadol,83,87.3
+Acetylsalicylic acid,Hydrochlorothiazide,81,87.5
+Doxycycline,Insulin human (isophane),80,87.7
+Doxycycline,Insulin human (regular),80,87.9
+Atorvastatin,Hydrochlorothiazide,76,88.1
+Fentanyl,Hydrochlorothiazide,75,88.3
+Donepezil,Hydrochlorothiazide,75,88.5
+Metformin,Naproxen,73,88.7
+Acetaminophen,Amoxicillin,71,88.9
+Acetaminophen,Tacrolimus,71,89.1
+Lisinopril,Losartan,68,89.3
+Hydrochlorothiazide,Ibuprofen,67,89.5
+Acetaminophen,Alendronic acid,66,89.7
+Clopidogrel,Hydrocodone,63,89.8
+Amoxicillin,Ibuprofen,61,90.0
+Metoprolol,Nitroglycerin,60,90.1
+Epinephrine,Ibuprofen,60,90.3
+Carvedilol,Furosemide,60,90.5
+Memantine,Metformin,55,90.6
+Metformin,Oxycodone,48,90.8
+Carvedilol,Hydrochlorothiazide,46,90.9
+Nitroglycerin,Proparacaine (ophthalmic),45,91.0
+Cyanocobalamin,Ibuprofen,41,91.1
+Lisinopril,Valsartan,41,91.2
+Oxycodone,Tacrolimus,41,91.3
+Astemizole,Salbutamol,40,91.4
+Alendronic acid,Furosemide,40,91.5
+Losartan,Tramadol,38,91.7
+Acetaminophen,Propranolol,38,91.8
+Prasugrel,Tramadol,38,91.9
+Lisinopril,Propranolol,38,92.0
+Atorvastatin,Tramadol,38,92.1
+Propranolol,Tramadol,38,92.2
+Levonorgestrel,Salbutamol,38,92.3
+Acetaminophen,Galantamine,37,92.4
+Budesonide,Fexofenadine,37,92.5
+Acetaminophen,Fexofenadine,35,92.6
+Clopidogrel,Furosemide,35,92.7
+Buprenorphine,Hydrocodone,32,92.7
+Acetaminophen,Estradiol,32,92.8
+Acetaminophen,Donepezil,31,92.9
+Norethisterone,Salbutamol,31,93.0
+Acetaminophen,Hydrocortisone,30,93.1
+Budesonide,Ibuprofen,29,93.2
+Losartan,Simvastatin,29,93.2
+Clopidogrel,Ibuprofen,28,93.3
+Fluticasone,Ibuprofen,28,93.4
+Cyanocobalamin,Furosemide,27,93.5
+Norethisterone,Oxycodone,27,93.5
+Budesonide,Ethinylestradiol,26,93.6
+Fluticasone,Hydrochlorothiazide,26,93.7
+Levonorgestrel,Oxycodone,25,93.7
+Acetylsalicylic acid,Furosemide,24,93.8
+Memantine,Simvastatin,24,93.9
+Levonorgestrel,Lisinopril,22,93.9
+Epinephrine,Hydrochlorothiazide,21,94.0
+Oxaliplatin,Simvastatin,20,94.0
+Lisinopril,Salmeterol,20,94.1
+Leucovorin,Simvastatin,20,94.2
+Simvastatin,Tramadol,20,94.2
+Diphenhydramine,Hydrocodone,19,94.3
+Budesonide,Doxycycline,19,94.3
+Donepezil,Ibuprofen,19,94.4
+Metformin,Warfarin,18,94.4
+Amoxicillin,Hydrochlorothiazide,18,94.5
+Epinephrine,Fentanyl,18,94.5
+Acetaminophen,Buprenorphine,18,94.6
+Amlodipine,Furosemide,17,94.6
+Acetaminophen,Cetirizine,17,94.6
+Amlodipine,Galantamine,17,94.7
+Acetaminophen,Acetylsalicylic acid,17,94.7
+Ondansetron,Simvastatin,17,94.8
+Levothyroxine,Tramadol,17,94.8
+Levothyroxine,Lisinopril,17,94.9
+Carvedilol,Insulin human (isophane),16,94.9
+Rocuronium,Simvastatin,16,95.0
+Propofol,Simvastatin,16,95.0
+Carvedilol,Insulin human (regular),16,95.1
+Naloxone,Salbutamol,16,95.1
+Atorvastatin,Simvastatin,16,95.1
+Atorvastatin,Furosemide,16,95.2
+Alendronic acid,Fentanyl,16,95.2
+Alendronic acid,Cyanocobalamin,16,95.3
+Meperidine,Naproxen,15,95.3
+Cetirizine,Fluticasone,15,95.4
+Cefazolin,Clopidogrel,15,95.4
+Acetaminophen,Cefuroxime,15,95.4
+Clopidogrel,Heparin,15,95.5
+Loratadine,Oxycodone,15,95.5
+Naproxen,Nitroglycerin,14,95.6
+Nitroglycerin,Propofol,14,95.6
+Nitroglycerin,Rocuronium,14,95.6
+Buprenorphine,Hydrochlorothiazide,14,95.7
+Nitroglycerin,Ondansetron,14,95.7
+Midazolam,Simvastatin,14,95.7
+Naloxone,Tramadol,14,95.8
+Metoprolol,Ondansetron,14,95.8
+Metoprolol,Rocuronium,14,95.9
+Metoprolol,Propofol,14,95.9
+Metformin,Tacrolimus,14,95.9
+Chlorpheniramine,Fentanyl,14,96.0
+Metoprolol,Naproxen,14,96.0
+Fexofenadine,Hydrochlorothiazide,14,96.0
+Fentanyl,Fluticasone,14,96.1
+Naproxen,Norethisterone,13,96.1
+Acetylsalicylic acid,Clopidogrel,13,96.2
+Lisinopril,Memantine,13,96.2
+Amlodipine,Amoxicillin,13,96.2
+Metoprolol,Oxaliplatin,13,96.3
+Leucovorin,Metoprolol,13,96.3
+Diazepam,Hydrochlorothiazide,12,96.3
+Cyanocobalamin,Fluticasone,12,96.4
+Cefuroxime,Ibuprofen,12,96.4
+Doxycycline,Fluticasone,12,96.4
+Midazolam,Nitroglycerin,12,96.5
+Metformin,Verapamil,12,96.5
+Metoprolol,Midazolam,12,96.5
+Enalapril,Hydrochlorothiazide,12,96.6
+Loratadine,Tramadol,12,96.6
+Levonorgestrel,Tramadol,12,96.6
+Meperidine,Oxycodone,12,96.7
+Estradiol,Fluticasone,12,96.7
+Metformin,Tramadol,12,96.7
+Enalapril,Insulin human (isophane),12,96.7
+Enalapril,Insulin human (regular),12,96.8
+Metformin,Valsartan,12,96.8
+Fexofenadine,Ibuprofen,11,96.8
+Lisinopril,Norethisterone,11,96.9
+Epinephrine,Estradiol,11,96.9
+Furosemide,Insulin human (regular),11,96.9
+Furosemide,Insulin human (isophane),11,97.0
+Naproxen,Salmeterol,10,97.0
+Acetaminophen,Sertraline,10,97.0
+Dextromethorphan,Hydrocodone,10,97.0
+Budesonide,Clopidogrel,10,97.1
+Naloxone,Simvastatin,10,97.1
+Fexofenadine,Fluticasone,10,97.1
+Doxylamine,Hydrocodone,10,97.2
+Metformin,Pravastatin,10,97.2
+Cetirizine,Epinephrine,10,97.2
+Atenolol,Hydrochlorothiazide,10,97.2
+Acetaminophen,Diazepam,10,97.3
+Levonorgestrel,Naproxen,10,97.3
+Memantine,Oxycodone,10,97.3
+Tropicamide,Warfarin,9,97.3
+Epinephrine,Fexofenadine,9,97.4
+Atorvastatin,Tacrolimus,9,97.4
+Chlorpheniramine,Ibuprofen,9,97.4
+Lovastatin,Metformin,9,97.4
+Atenolol,Simvastatin,9,97.5
+Acetaminophen,Phenoxymethylpenicillin,9,97.5
+Salmeterol,Verapamil,8,97.5
+Loratadine,Norethisterone,8,97.5
+Acetylsalicylic acid,Cyanocobalamin,8,97.5
+Acetylsalicylic acid,Carvedilol,8,97.6
+Doxorubicin,Fluticasone,8,97.6
+Nitroglycerin,Oxaliplatin,8,97.6
+Digoxin,Fluticasone,8,97.6
+Doxorubicin,Hydrochlorothiazide,8,97.7
+Carvedilol,Clopidogrel,8,97.7
+Lisinopril,Warfarin,8,97.7
+Salbutamol,Verapamil,8,97.7
+Leucovorin,Nitroglycerin,8,97.7
+Losartan,Metoprolol,8,97.8
+Lisinopril,Verapamil,8,97.8
+Nitroglycerin,Tramadol,7,97.8
+Epinephrine,Hydrocortisone,7,97.8
+Cetirizine,Hydrocodone,7,97.8
+Budesonide,Cetirizine,7,97.9
+Simvastatin,Valsartan,7,97.9
+Acetaminophen,Fluoxetine,7,97.9
+Astemizole,Tramadol,7,97.9
+Levonorgestrel,Loratadine,7,97.9
+Levonorgestrel,Metformin,7,98.0
+Levothyroxine,Simvastatin,7,98.0
+Lisinopril,Loratadine,7,98.0
+Metoprolol,Tramadol,7,98.0
+Acetaminophen,Pravastatin,7,98.0
+Nicotine,Oxycodone,7,98.1
+Nicotine,Tramadol,7,98.1
+Atorvastatin,Verapamil,6,98.1
+Leucovorin,Salbutamol,6,98.1
+Leucovorin,Warfarin,6,98.1
+Salbutamol,Terfenadine,6,98.1
+Meperidine,Simvastatin,6,98.2
+Clopidogrel,Digoxin,6,98.2
+Oxaliplatin,Salbutamol,6,98.2
+Oxaliplatin,Salmeterol,6,98.2
+Oxaliplatin,Warfarin,6,98.2
+Ciprofloxacin,Clopidogrel,6,98.2
+Leucovorin,Lisinopril,6,98.3
+Leucovorin,Nicotine,6,98.3
+Leucovorin,Salmeterol,6,98.3
+Fentanyl,Hydrocortisone,6,98.3
+Acetaminophen,Valsartan,6,98.3
+Ethinylestradiol,Insulin human (isophane),6,98.3
+Labetalol,Lisinopril,6,98.3
+Cetirizine,Fentanyl,6,98.4
+Ethinylestradiol,Insulin human (regular),6,98.4
+Atorvastatin,Digoxin,6,98.4
+Lisinopril,Oxaliplatin,6,98.4
+Acetylsalicylic acid,Budesonide,5,98.4
+Acetylsalicylic acid,Alteplase,5,98.4
+Acetaminophen,Doxycycline,5,98.5
+Terfenadine,Tramadol,5,98.5
+Sertraline,Simvastatin,5,98.5
+Pravastatin,Salbutamol,5,98.5
+Pravastatin,Simvastatin,5,98.5
+Atomoxetine,Salbutamol,5,98.5
+Acetylsalicylic acid,Ibuprofen,5,98.5
+Alendronic acid,Ferrous sulfate anhydrous,5,98.5
+Nicotine,Simvastatin,5,98.6
+Dextromethorphan,Fluticasone,5,98.6
+Norethisterone,Simvastatin,5,98.6
+Clopidogrel,Codeine,5,98.6
+Oxycodone,Pravastatin,5,98.6
+Oxycodone,Prasugrel,5,98.6
+Loratadine,Simvastatin,5,98.6
+Loratadine,Metformin,5,98.7
+Leucovorin,Losartan,5,98.7
+Atomoxetine,Budesonide,5,98.7
+Simvastatin,Sufentanil,5,98.7
+Alendronic acid,Amoxicillin,5,98.7
+Losartan,Naproxen,5,98.7
+Losartan,Oxaliplatin,5,98.7
+Alendronic acid,Epinephrine,5,98.8
+Chlorpheniramine,Codeine,5,98.8
+Benazepril,Hydrochlorothiazide,5,98.8
+Atorvastatin,Oxaliplatin,5,98.8
+Azithromycin,Epinephrine,4,98.8
+Ciprofloxacin,Epinephrine,4,98.8
+Lisinopril,Ondansetron,4,98.8
+Alendronic acid,Ibuprofen,4,98.8
+Meperidine,Metoprolol,4,98.8
+Nitroglycerin,Sufentanil,4,98.9
+Metoprolol,Sufentanil,4,98.9
+Cefuroxime,Epinephrine,4,98.9
+Cyclosporine,Hydrocortisone,4,98.9
+Cyanocobalamin,Heparin,4,98.9
+Cefazolin,Hydrochlorothiazide,4,98.9
+Acetaminophen,Salmeterol,4,98.9
+Oxycodone,Warfarin,4,98.9
+Dextromethorphan,Ibuprofen,4,98.9
+Atorvastatin,Clopidogrel,4,99.0
+Atorvastatin,Carvedilol,4,99.0
+Phenoxymethylpenicillin,Simvastatin,4,99.0
+Lisinopril,Midazolam,4,99.0
+Atorvastatin,Ibuprofen,4,99.0
+Etonogestrel,Insulin human (isophane),4,99.0
+Estradiol,Ibuprofen,4,99.0
+Etonogestrel,Insulin human (regular),4,99.0
+Cetirizine,Ibuprofen,4,99.0
+Meperidine,Nitroglycerin,4,99.1
+Acetaminophen,Warfarin,4,99.1
+Heparin,Hydrochlorothiazide,4,99.1
+Fluorouracil,Hydrocortisone,4,99.1
+Losartan,Nitroglycerin,4,99.1
+Lisinopril,Propofol,4,99.1
+Loratadine,Prednisone,4,99.1
+Morphine,Simvastatin,3,99.1
+Clopidogrel,Galantamine,3,99.1
+Clopidogrel,Fentanyl,3,99.1
+Clopidogrel,Donepezil,3,99.1
+Clopidogrel,Cyanocobalamin,3,99.2
+Acetaminophen,Furosemide,3,99.2
+Acetaminophen,Azithromycin,3,99.2
+Doxycycline,Ethinylestradiol,3,99.2
+Carvedilol,Cyanocobalamin,3,99.2
+Acetylsalicylic acid,Amoxicillin,3,99.2
+Cetirizine,Hydrocortisone,3,99.2
+Chlorpheniramine,Dextromethorphan,3,99.2
+Chlorpheniramine,Doxylamine,3,99.2
+Estradiol,Hydrochlorothiazide,3,99.2
+Hydrochlorothiazide,Isoflurane,3,99.2
+Lamivudine,Simvastatin,3,99.2
+Memantine,Nitroglycerin,3,99.3
+Memantine,Metoprolol,3,99.3
+Fexofenadine,Hydrocortisone,3,99.3
+Fluoxetine,Fluticasone,3,99.3
+Meperidine,Nitrofurantoin,3,99.3
+Ciprofloxacin,Insulin human (regular),3,99.3
+Lisinopril,Phenoxymethylpenicillin,3,99.3
+Amlodipine,Heparin,3,99.3
+Ciprofloxacin,Insulin human (isophane),3,99.3
+Ciprofloxacin,Fluticasone,3,99.3
+Levonorgestrel,Simvastatin,3,99.3
+Ciprofloxacin,Ethinylestradiol,3,99.3
+Acetaminophen,Carvedilol,3,99.4
+Acetaminophen,Ciprofloxacin,3,99.4
+Budesonide,Cephalexin,2,99.4
+Simvastatin,Tamoxifen,2,99.4
+Sacubitril,Simvastatin,2,99.4
+Levothyroxine,Midazolam,2,99.4
+Levothyroxine,Propofol,2,99.4
+Levothyroxine,Ondansetron,2,99.4
+Levothyroxine,Rocuronium,2,99.4
+Astemizole,Ondansetron,2,99.4
+Atorvastatin,Valsartan,2,99.4
+Amoxicillin,Hydrocortisone,2,99.4
+Ciprofloxacin,Doxycycline,2,99.4
+Ciprofloxacin,Fexofenadine,2,99.4
+Chlorpheniramine,Heparin,2,99.4
+Atorvastatin,Ciprofloxacin,2,99.4
+Lorazepam,Simvastatin,2,99.4
+Lorazepam,Nitroglycerin,2,99.4
+Lorazepam,Metoprolol,2,99.5
+Levothyroxine,Nitroglycerin,2,99.5
+Loratadine,Naproxen,2,99.5
+Estradiol,Fexofenadine,2,99.5
+Estradiol,Fentanyl,2,99.5
+Epinephrine,Fluoxetine,2,99.5
+Acetylsalicylic acid,Ciprofloxacin,2,99.5
+Drospirenone,Ibuprofen,2,99.5
+Metoprolol,Valsartan,2,99.5
+Acetylsalicylic acid,Docetaxel,2,99.5
+Fentanyl,Ibuprofen,2,99.5
+Cetirizine,Doxylamine,2,99.5
+Doxylamine,Fentanyl,2,99.5
+Atorvastatin,Sacubitril,2,99.5
+Azithromycin,Salbutamol,2,99.5
+Metformin,Ondansetron,2,99.5
+Cephalexin,Ethinylestradiol,2,99.5
+Metformin,Norethisterone,2,99.5
+Azithromycin,Ibuprofen,2,99.6
+Azithromycin,Fluticasone,2,99.6
+Fexofenadine,Fluoxetine,2,99.6
+Metformin,Propofol,2,99.6
+Ciprofloxacin,Hydrocodone,2,99.6
+Hydrocortisone,Ibuprofen,2,99.6
+Memantine,Naproxen,2,99.6
+Medroxyprogesterone acetate,Metformin,2,99.6
+Meperidine,Salbutamol,2,99.6
+Ciprofloxacin,Hydrochlorothiazide,2,99.6
+Levothyroxine,Metoprolol,2,99.6
+Leuprolide,Metformin,2,99.6
+Dextromethorphan,Fexofenadine,2,99.6
+Cefuroxime,Cetirizine,2,99.6
+Nitroglycerin,Valsartan,2,99.6
+Carbamazepine,Fluticasone,2,99.6
+Budesonide,Ciprofloxacin,2,99.6
+Budesonide,Estradiol,2,99.6
+Clopidogrel,Docetaxel,2,99.6
+Ribociclib,Simvastatin,2,99.7
+Carbamazepine,Ibuprofen,2,99.7
+Diphenhydramine,Fentanyl,2,99.7
+Atorvastatin,Docetaxel,2,99.7
+Doxycycline,Fluoxetine,2,99.7
+Digoxin,Hydrochlorothiazide,2,99.7
+Naproxen,Propofol,2,99.7
+Naproxen,Ondansetron,2,99.7
+Milnacipran,Naproxen,2,99.7
+Budesonide,Ceftriaxone,1,99.7
+Acetaminophen,Cyclosporine,1,99.7
+Piperacillin,Simvastatin,1,99.7
+Phenoxymethylpenicillin,Warfarin,1,99.7
+Prednisone,Salbutamol,1,99.7
+Sevoflurane,Simvastatin,1,99.7
+Simvastatin,Ticagrelor,1,99.7
+Acetaminophen,Cefazolin,1,99.7
+Salbutamol,Tamoxifen,1,99.7
+Acetaminophen,Carbamazepine,1,99.7
+Salbutamol,Vancomycin,1,99.7
+Atorvastatin,Cyanocobalamin,1,99.7
+Ciprofloxacin,Fentanyl,1,99.7
+Azithromycin,Doxycycline,1,99.7
+Azithromycin,Fexofenadine,1,99.7
+Amlodipine,Isoflurane,1,99.7
+Astemizole,Propofol,1,99.7
+Levothyroxine,Warfarin,1,99.7
+Levothyroxine,Sufentanil,1,99.7
+Levothyroxine,Propranolol,1,99.8
+Loratadine,Nitrofurantoin,1,99.8
+Losartan,Meperidine,1,99.8
+Atorvastatin,Cefazolin,1,99.8
+Salmeterol,Tamoxifen,1,99.8
+Ciprofloxacin,Cyanocobalamin,1,99.8
+Lisinopril,Morphine,1,99.8
+Lisinopril,Meperidine,1,99.8
+Levothyroxine,Losartan,1,99.8
+Bivalirudin,Clopidogrel,1,99.8
+Azithromycin,Terfenadine,1,99.8
+Aztreonam,Salbutamol,1,99.8
+Aztreonam,Ethinylestradiol,1,99.8
+Fluticasone,Heparin,1,99.8
+Fluticasone,Hydrocortisone,1,99.8
+Cephalexin,Fluticasone,1,99.8
+Cetirizine,Ciprofloxacin,1,99.8
+Cephalexin,Fexofenadine,1,99.8
+Metformin,Morphine,1,99.8
+Cephalexin,Epinephrine,1,99.8
+Cephalexin,Estradiol,1,99.8
+Meperidine,Tramadol,1,99.8
+Budesonide,Cefpodoxime,1,99.8
+Levonorgestrel,Metoprolol,1,99.8
+Atomoxetine,Epinephrine,1,99.8
+Acetylsalicylic acid,Heparin,1,99.8
+Hydrocodone,Isoflurane,1,99.8
+Clonazepam,Ethinylestradiol,1,99.8
+Ciprofloxacin,Fluoxetine,1,99.8
+Midazolam,Oxycodone,1,99.8
+Metoprolol,Ticagrelor,1,99.8
+Metoprolol,Sevoflurane,1,99.8
+Acetylsalicylic acid,Fentanyl,1,99.8
+Acetylsalicylic acid,Cefazolin,1,99.8
+Atorvastatin,Propofol,1,99.8
+Doxycycline,Ibuprofen,1,99.8
+Acetaminophen,Vancomycin,1,99.8
+Atorvastatin,Phenoxymethylpenicillin,1,99.9
+Doxycycline,Hydrocortisone,1,99.9
+Ethinylestradiol,Hydrocortisone,1,99.9
+Estradiol,Hydrocortisone,1,99.9
+Metformin,Sevoflurane,1,99.9
+Metoprolol,Morphine,1,99.9
+Metoprolol,Propranolol,1,99.9
+Atorvastatin,Ondansetron,1,99.9
+Atorvastatin,Fentanyl,1,99.9
+Atorvastatin,Heparin,1,99.9
+Acetaminophen,Proparacaine (ophthalmic),1,99.9
+Acetaminophen,Propofol,1,99.9
+Acetaminophen,Rocuronium,1,99.9
+Acetaminophen,Trimethoprim,1,99.9
+Nitrofurantoin,Oxycodone,1,99.9
+Morphine,Nitroglycerin,1,99.9
+Acetaminophen,Piperacillin,1,99.9
+Acetaminophen,Isoflurane,1,99.9
+Naproxen,Trimethoprim,1,99.9
+Morphine,Warfarin,1,99.9
+Donepezil,Doxylamine,1,99.9
+Diphenhydramine,Doxylamine,1,99.9
+Doxycycline,Fentanyl,1,99.9
+Doxycycline,Heparin,1,99.9
+Cyanocobalamin,Estradiol,1,99.9
+Cyanocobalamin,Donepezil,1,99.9
+Codeine,Doxylamine,1,99.9
+Codeine,Dextromethorphan,1,99.9
+Cefpodoxime,Cetirizine,1,99.9
+Cefpodoxime,Ceftriaxone,1,99.9
+Cefazolin,Fluticasone,1,99.9
+Cefazolin,Cyanocobalamin,1,99.9
+Nitrofurantoin,Salbutamol,1,99.9
+Ceftriaxone,Cetirizine,1,99.9
+Ceftriaxone,Epinephrine,1,99.9
+Cyanocobalamin,Galantamine,1,99.9
+Cyclosporine,Fluticasone,1,99.9
+Dextromethorphan,Diphenhydramine,1,100.0
+Cyclosporine,Epinephrine,1,100.0
+Cyclosporine,Doxycycline,1,100.0
+Acetaminophen,Heparin,1,100.0
+Ondansetron,Oxycodone,1,100.0
+Nitroglycerin,Sevoflurane,1,100.0
+Nitroglycerin,Propranolol,1,100.0
+Cefuroxime,Fexofenadine,1,100.0
+Cephalexin,Doxycycline,1,100.0
+Ribociclib,Salbutamol,1,100.0
+Propranolol,Simvastatin,1,100.0
+Clopidogrel,Hydrocortisone,1,100.0
+Clopidogrel,Epinephrine,1,100.0
+Clopidogrel,Doxycycline,1,100.0
+Ribociclib,Salmeterol,1,100.0
+Budesonide,Hydrocortisone,1,100.0
+Budesonide,Cyclosporine,1,100.0
+Carbamazepine,Clopidogrel,1,100.0
+Oxycodone,Propofol,1,100.0
