@@ -1,0 +1,26 @@
+# Raw and intermediate data. Never committed: Synthea output, downloaded
+# reference files, and the DuckDB warehouse are all reproducible from the
+# fetch scripts plus the recorded seed.
+data/
+output/
+
+# Synthea's own default export directory name, if it is ever run from the
+# repo root without --exporter.baseDirectory.
+synthea_output/
+
+# Environments and build artefacts
+.venv/
+__pycache__/
+*.py[cod]
+
+# Synthea ships as a ~200 MB fat jar. Fetched, not committed.
+*.jar
+
+# R session state
+.Rhistory
+.RData
+.Rproj.user/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
