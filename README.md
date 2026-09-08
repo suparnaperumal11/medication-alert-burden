@@ -395,6 +395,13 @@ attribution manifest are. **DrugBank was avoided** (licence restricts
 redistribution) and **TWOSIDES is not redistributed** (licence unspecified on
 Therapeutics Data Commons).
 
+**Licensing of this repository is split** — see [`LICENSE`](LICENSE). Source
+code and prose are MIT. The derived tables in `outputs/` that carry DDInter
+drug names or severity grades are *adaptations* of a CC BY-NC-SA 4.0 dataset
+and inherit those terms: non-commercial, attribution required, ShareAlike. That
+is a real constraint on reuse, not a formality, and it is why the alert tables
+cannot simply be lifted into a commercial product.
+
 ### Run it
 
 ```bash
