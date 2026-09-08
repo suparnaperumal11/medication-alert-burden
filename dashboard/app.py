@@ -21,6 +21,7 @@ import streamlit as st
 
 ROOT = Path(__file__).resolve().parents[1]
 ASSIGN = ROOT / "outputs" / "policy_assignments.parquet"
+PPD = ROOT / "outputs" / "patient_prescribing_days.csv"
 
 POLICIES = {
     "A - Alert everything": "A",
@@ -42,12 +43,12 @@ st.set_page_config(page_title="Medication Alert Burden", layout="wide")
 
 
 @st.cache_data
-def load() -> pd.DataFrame:
-    return pd.read_parquet(ASSIGN)
+def load() -> tuple[pd.DataFrame, pd.DataFrame]:
+    return pd.read_parquet(ASSIGN), pd.read_csv(PPD)
 
 
 try:
-    df = load()
+    df, ppd = load()
 except FileNotFoundError:
     st.error(
         "outputs/policy_assignments.parquet not found. Build it first:\n\n"
@@ -86,8 +87,23 @@ if d.empty:
 interrupt = d[col] == "interrupt"
 n_all = len(d)
 n_major = int((d.severity == "Major").sum())
-pt_days = d.groupby(["patient_id", "start_date"]).ngroups
 major_kept = int((interrupt & (d.severity == "Major")).sum())
+
+# Denominator: prescribing days, not alerting days. Grouping the alert table
+# would count only days that generate an alert and report a rate about twice as
+# large under the same name Stage 4 uses.
+#
+# For the whole cohort this is every prescribed-for patient (951 patients,
+# 11,655 days), which is what outputs/alert_budget_table.csv uses -- restricting
+# to the 524 patients who happen to alert would quietly shrink the denominator
+# to 9,170 and inflate every rate. For a subgroup it is that subgroup's own
+# patients, since a subgroup is only identifiable from alerts.
+if mask is None:
+    pt_days = int(ppd.prescribing_days.sum())
+else:
+    pt_days = int(ppd.loc[ppd.patient_id.isin(d.patient_id.unique()),
+                          "prescribing_days"].sum())
+alerting_days = d.groupby(["patient_id", "start_date"]).ngroups
 
 # Policy A unlimited is the burden baseline for the same subgroup.
 base = int((d["assign_A_unlim"] == "interrupt").sum())
@@ -111,7 +127,8 @@ k4.metric("Top pair's share of all alerts", f"{top_pair_share:.1f}%",
 
 st.caption(
     f"Denominators: **{n_all:,} alerts**, {n_major:,} Major, "
-    f"{d.patient_id.nunique():,} patients, {pt_days:,} patient-prescribing-days, "
+    f"{d.patient_id.nunique():,} patients, {pt_days:,} patient-prescribing-days "
+    f"({alerting_days:,} of which generate at least one alert), "
     f"window 2021-09-07 to 2026-09-07."
 )
 

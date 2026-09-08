@@ -672,3 +672,46 @@ Playwright uses the Chrome already installed (`channel="chrome"`), so no browser
 download was needed. It is a tooling dependency for producing screenshots, not an
 analysis dependency, and is deliberately kept out of `requirements.txt`.
 
+---
+
+## Stage 10 — README, and a denominator bug caught while writing it
+
+**The same metric name carried two different denominators across stages.**
+Stage 4 (`burden_analysis.py`) computed "alerts per patient-prescribing-day"
+over **all 11,655** patient-prescribing-days in the window. Stage 7
+(`evaluate.py`) computed a column with the same name by grouping the *alert*
+table, which only contains days that generate an alert — **5,677**. Every rate
+in the budget table and on the frontier's x-axis was therefore about **2.05×
+too large**, under a label that matched Stage 4 and `eval/criteria.md`.
+
+Nothing looked wrong. Both numbers were internally consistent, both were
+plausible, and the policy *ranking* was unaffected because every policy shared
+the inflated denominator. Only writing the README next to the Stage 4 figures
+surfaced it: 6.51 and 3.17 could not both be "alerts per patient-prescribing-
+day".
+
+Fixed by deriving the denominator from the prescribing data rather than the
+alert table — `outputs/patient_prescribing_days.csv`, one row per patient — so
+it cannot be inferred from a filtered table again. An assertion now checks that
+prescribing days are never fewer than alerting days.
+
+The dashboard had a third variant of the same bug: it restricted the
+denominator to the 524 patients who happen to alert (9,170 days) rather than all
+951 prescribed for, reading 0.18 where the committed table says 0.15. Now uses
+the full cohort for the all-alerts view and the subgroup's own patients for a
+subgroup, with the difference stated in the code.
+
+**Corrected headline rates** (Policy A, unlimited = 3.17 per
+patient-prescribing-day, matching Stage 4):
+
+| At budget 5/patient-day | Interrupts | Per patient-prescribing-day | Major kept |
+|---|---:|---:|---:|
+| B | 1,691 | 0.15 | 87.3% |
+| D | 19,372 | 1.66 | 28.0% |
+
+Counts, percentages and the verdict are unchanged. This is the third bug in
+this project whose output looked entirely plausible — after the RxNorm grouping
+bug in Stage 2 and the eight-of-fourteen DDInter download. All three were caught
+by checking a number against a different number that should have agreed with it,
+which is the only method that has actually worked here.
+
