@@ -25,10 +25,13 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# Regenerable intermediate. Every column in it is carried into
-# outputs/policy_assignments.parquet by src/prioritisation/policies.py, so
-# committing both would store the same 638 KB twice.
+# Regenerable intermediates. Every column of both is carried into
+# outputs/policy_assignments.parquet by src/prioritisation/policies.py
+# (verified: zero columns missing), so committing them would store the same
+# alert data three times. policy_assignments.parquet is the one artefact a
+# reviewer needs -- the dashboard reads it and it contains everything.
 outputs/alert_features.parquet
+outputs/alerts_primary.parquet
 
 # Regenerable handoff to R (src/prioritisation/export_for_r.py). Several MB
 # of flattened alerts; the committed Stage 8 artefacts are the R script and
