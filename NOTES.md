@@ -550,3 +550,86 @@ use" as a hypothesis to test prospectively — and it would need override data t
 test honestly, since the reason to re-warn is that the first warning may not
 have been read.
 
+---
+
+## Stage 8 — R evaluation
+
+### The clustering lesson, which is the methodological point of this stage
+
+A logistic regression of `is_major ~ score_D_scaled` gives slope 0.569,
+SE 0.165, **p = 0.00057**. Read naively that is a highly significant effect and
+Policy D looks vindicated.
+
+It is an artefact of pretending 36,929 alerts are 36,929 independent
+observations. They are 524 patients, one of whom contributes 350 alerts, and
+alerts within a patient share drugs, comorbidity and the same repeated pair.
+
+Bootstrapping **patients** rather than alerts (B = 400, whole clusters
+resampled):
+
+| Statistic | 2.5% | Median | 97.5% |
+|---|---:|---:|---:|
+| AUC, Policy D score vs Major | **0.304** | 0.523 | **0.622** |
+| Net benefit, Policy B @ budget 5 | 0.0178 | 0.0430 | 0.0834 |
+| Net benefit, Policy D @ budget 5 | −0.0226 | **−0.0126** | **−0.0002** |
+| Net benefit, interrupt all | −0.0329 | −0.0008 | 0.0498 |
+| Major retained, B | 0.846 | 0.876 | 0.966 |
+| Major retained, D | 0.199 | 0.289 | 0.620 |
+
+**The AUC interval comfortably contains 0.5.** Policy D's discrimination is not
+distinguishable from chance once patient clustering is respected. The naive
+p-value said otherwise. This is the single most important statistical point in
+the project and the one to be ready to defend.
+
+**Policy D's net benefit is negative and its interval excludes zero.** At a 5%
+threshold, D is worse than interrupting nobody at all — it spends interruptions
+on non-Major alerts faster than it captures Major ones. Policy B's is positive
+and excludes zero.
+
+### Calibration
+
+Decile bins with Wilson intervals (Wald intervals misbehave at a 5.25% base
+rate). The curve is **not flat — it is hump-shaped**: 5.5% Major in the lowest
+decile, peaking at 8.9% in decile 6, falling to **4.3% in the top decile, below
+the 5.25% overall rate**. The alerts Policy D ranks most urgent are slightly
+*less* likely to be Major than average. Figure text was corrected from "flat" to
+describe this accurately.
+
+### Subgroups (fixed in criteria.md before results)
+
+| Subgroup | Alerts | Patients | Major kept, B | Major kept, D | D's AUC |
+|---|---:|---:|---:|---:|---:|
+| All | 36,929 | 524 | 87.3% | 28.0% | 0.539 |
+| Older adults 65+ | 25,732 | 135 | 85.9% | 18.6% | 0.557 |
+| High polypharmacy | 33,437 | 301 | 87.2% | 23.9% | 0.544 |
+| Renal-relevant | 27,340 | 69 | 85.6% | 18.5% | 0.610 |
+
+B leads in every subgroup. D is at its least bad on renal patients (AUC 0.610),
+which is the one place its features carry a little signal — but it still loses
+by ~67 percentage points on major retention.
+
+### A circularity that must be stated, not hidden
+
+**Policy B's dominance in the decision curve is partly definitional.** B's rule
+is "interrupt iff severity is Major" and the outcome is "severity is Major", so
+B has *zero false positives by construction* — which is exactly why its curve is
+flat and positive across the whole threshold range. B is being scored against
+the quantity it is defined on.
+
+This does not make the analysis vacuous, but it relocates where the information
+is. The real content is among the **label-blind** strategies: Policy D and
+budgeted Policy A never see severity, and D fails to beat arbitrary selection.
+The defensible claim is therefore not *"B is excellent"* but **"nothing that
+avoids using severity manages to approximate it"** — the same conclusion Stage 7
+reached by another route. This caveat is written into `R/evaluation.R` and
+belongs in the README.
+
+### Why net benefit was hand-written
+
+`NB = TP/n − (FP/n) × (p_t/(1−p_t))`, about fifteen lines. Neither `dcurves`
+nor `rmda` was installed, and writing it keeps the exchange-rate term visible:
+at p_t = 0.05 the analyst is stating that one missed Major is worth nineteen
+needless interruptions. A package call hides the one term that carries the
+argument. Threshold range 1–30%: past ~20% the stated willingness-to-be-
+interrupted exceeds the 5.25% base rate and every strategy collapses.
+

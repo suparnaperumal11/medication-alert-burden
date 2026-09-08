@@ -1,0 +1,355 @@
+"strategy","threshold","nb"
+"Interrupt all (Policy A)",0.01,0.0429081631117971
+"Interrupt all (Policy A)",0.015,0.0380498289143951
+"Interrupt all (Policy A)",0.02,0.033141919878244
+"Interrupt all (Policy A)",0.025,0.0281836733135171
+"Interrupt all (Policy A)",0.03,0.0231743108048239
+"Interrupt all (Policy A)",0.035,0.0181130378038126
+"Interrupt all (Policy A)",0.04,0.0129990432090408
+"Interrupt all (Policy A)",0.045,0.00783149893264831
+"Interrupt all (Policy A)",0.05,0.00260955945334646
+"Interrupt all (Policy A)",0.055,-0.00266763864478398
+"Interrupt all (Policy A)",0.06,-0.00800097714821369
+"Interrupt all (Policy A)",0.065,-0.013391356705156
+"Interrupt all (Policy A)",0.07,-0.0188396973326031
+"Interrupt all (Policy A)",0.075,-0.0243469389398063
+"Interrupt all (Policy A)",0.08,-0.029914041868827
+"Interrupt all (Policy A)",0.085,-0.0355419874528097
+"Interrupt all (Policy A)",0.09,-0.0412317785926603
+"Interrupt all (Policy A)",0.095,-0.0469844403528407
+"Interrupt all (Policy A)",0.1,-0.0528010205770232
+"Interrupt all (Policy A)",0.105,-0.0586825905243808
+"Interrupt all (Policy A)",0.11,-0.0646302455273268
+"Interrupt all (Policy A)",0.115,-0.070645105671549
+"Interrupt all (Policy A)",0.12,-0.0767283164992282
+"Interrupt all (Policy A)",0.125,-0.0828810497363667
+"Interrupt all (Policy A)",0.13,-0.0891045040451964
+"Interrupt all (Policy A)",0.135,-0.0953999058026831
+"Interrupt all (Policy A)",0.14,-0.101768509906187
+"Interrupt all (Policy A)",0.145,-0.108211600607393
+"Interrupt all (Policy A)",0.15,-0.114730492375672
+"Interrupt all (Policy A)",0.155,-0.121326530792096
+"Interrupt all (Policy A)",0.16,-0.128001093475382
+"Interrupt all (Policy A)",0.165,-0.134755591041103
+"Interrupt all (Policy A)",0.17,-0.141591468095567
+"Interrupt all (Policy A)",0.175,-0.148510204265843
+"Interrupt all (Policy A)",0.18,-0.155513315267464
+"Interrupt all (Policy A)",0.185,-0.162602354011437
+"Interrupt all (Policy A)",0.19,-0.169778911752248
+"Interrupt all (Policy A)",0.195,-0.177044619278659
+"Interrupt all (Policy A)",0.2,-0.184401148149151
+"Interrupt all (Policy A)",0.205,-0.191850211973989
+"Interrupt all (Policy A)",0.21,-0.199393567745976
+"Interrupt all (Policy A)",0.215,-0.207033017222065
+"Interrupt all (Policy A)",0.22,-0.214770408358104
+"Interrupt all (Policy A)",0.225,-0.222607636799124
+"Interrupt all (Policy A)",0.23,-0.230546647427689
+"Interrupt all (Policy A)",0.235,-0.238589435972968
+"Interrupt all (Policy A)",0.24,-0.246738050683317
+"Interrupt all (Policy A)",0.245,-0.254994594065326
+"Interrupt all (Policy A)",0.25,-0.263361224692428
+"Interrupt all (Policy A)",0.255,-0.271840159086337
+"Interrupt all (Policy A)",0.26,-0.280433673674758
+"Interrupt all (Policy A)",0.265,-0.289144106829008
+"Interrupt all (Policy A)",0.27,-0.297973860985371
+"Interrupt all (Policy A)",0.275,-0.306925404854236
+"Interrupt all (Policy A)",0.28,-0.316001275721279
+"Interrupt all (Policy A)",0.285,-0.325204081845204
+"Interrupt all (Policy A)",0.29,-0.33453650495679
+"Interrupt all (Policy A)",0.295,-0.344001302864285
+"Interrupt all (Policy A)",0.3,-0.353601312170458
+"Policy A, budget 5",0.01,0.0122342327113645
+"Policy A, budget 5",0.015,0.00963352230435877
+"Policy A, budget 5",0.02,0.00700627403605705
+"Policy A, budget 5",0.025,0.0043520796316702
+"Policy A, budget 5",0.03,0.00167052239837213
+"Policy A, budget 5",0.035,-0.00103882299278394
+"Policy A, budget 5",0.04,-0.00377639073176456
+"Policy A, budget 5",0.045,-0.00654262410151984
+"Policy A, budget 5",0.05,-0.00933797571727255
+"Policy A, budget 5",0.055,-0.0121629077734036
+"Policy A, budget 5",0.06,-0.0150178922982169
+"Policy A, budget 5",0.065,-0.0179034114168784
+"Policy A, budget 5",0.07,-0.0208199576228374
+"Policy A, budget 5",0.075,-0.02376803405805
+"Policy A, budget 5",0.08,-0.026748154802341
+"Policy A, budget 5",0.085,-0.0297608451722527
+"Policy A, budget 5",0.09,-0.0328066420297458
+"Policy A, budget 5",0.095,-0.0358860941011339
+"Policy A, budget 5",0.1,-0.0389997623066485
+"Policy A, budget 5",0.105,-0.0421482201010515
+"Policy A, budget 5",0.11,-0.0453320538257288
+"Policy A, budget 5",0.115,-0.0485518630727187
+"Policy A, budget 5",0.12,-0.0518082610611517
+"Policy A, budget 5",0.125,-0.0551018750265954
+"Policy A, budget 5",0.13,-0.0584333466238258
+"Policy A, budget 5",0.135,-0.0618033323435676
+"Policy A, budget 5",0.14,-0.0652125039437714
+"Policy A, budget 5",0.145,-0.0686615488960245
+"Policy A, budget 5",0.15,-0.0721511708477158
+"Policy A, budget 5",0.155,-0.0756820901006105
+"Policy A, budget 5",0.16,-0.0792550441065159
+"Policy A, budget 5",0.165,-0.0828707879807555
+"Policy A, budget 5",0.17,-0.0865300950342027
+"Policy A, budget 5",0.175,-0.0902337573246615
+"Policy A, budget 5",0.18,-0.0939825862284186
+"Policy A, budget 5",0.185,-0.0977774130328352
+"Policy A, budget 5",0.19,-0.101619089550887
+"Policy A, budget 5",0.195,-0.105508488758603
+"Policy A, budget 5",0.2,-0.109446505456416
+"Policy A, budget 5",0.205,-0.11343405695546
+"Policy A, budget 5",0.21,-0.117472083789934
+"Policy A, budget 5",0.215,-0.121561550456695
+"Policy A, budget 5",0.22,-0.125703446183286
+"Policy A, budget 5",0.225,-0.129898785725704
+"Policy A, budget 5",0.23,-0.134148610197244
+"Policy A, budget 5",0.235,-0.13845398792985
+"Policy A, budget 5",0.24,-0.142816015369464
+"Policy A, budget 5",0.245,-0.147235818006954
+"Policy A, budget 5",0.25,-0.151714551346277
+"Policy A, budget 5",0.255,-0.156253401911631
+"Policy A, budget 5",0.26,-0.160853588295436
+"Policy A, budget 5",0.265,-0.165516362249089
+"Policy A, budget 5",0.27,-0.170243009818545
+"Policy A, budget 5",0.275,-0.17503485252689
+"Policy A, budget 5",0.28,-0.179893248606184
+"Policy A, budget 5",0.285,-0.184819594280993
+"Policy A, budget 5",0.29,-0.189815325106152
+"Policy A, budget 5",0.295,-0.194881917361454
+"Policy A, budget 5",0.3,-0.200020889506118
+"Policy B, severity (budget 5)",0.01,0.0457905710958867
+"Policy B, severity (budget 5)",0.015,0.0457905710958867
+"Policy B, severity (budget 5)",0.02,0.0457905710958867
+"Policy B, severity (budget 5)",0.025,0.0457905710958867
+"Policy B, severity (budget 5)",0.03,0.0457905710958867
+"Policy B, severity (budget 5)",0.035,0.0457905710958867
+"Policy B, severity (budget 5)",0.04,0.0457905710958867
+"Policy B, severity (budget 5)",0.045,0.0457905710958867
+"Policy B, severity (budget 5)",0.05,0.0457905710958867
+"Policy B, severity (budget 5)",0.055,0.0457905710958867
+"Policy B, severity (budget 5)",0.06,0.0457905710958867
+"Policy B, severity (budget 5)",0.065,0.0457905710958867
+"Policy B, severity (budget 5)",0.07,0.0457905710958867
+"Policy B, severity (budget 5)",0.075,0.0457905710958867
+"Policy B, severity (budget 5)",0.08,0.0457905710958867
+"Policy B, severity (budget 5)",0.085,0.0457905710958867
+"Policy B, severity (budget 5)",0.09,0.0457905710958867
+"Policy B, severity (budget 5)",0.095,0.0457905710958867
+"Policy B, severity (budget 5)",0.1,0.0457905710958867
+"Policy B, severity (budget 5)",0.105,0.0457905710958867
+"Policy B, severity (budget 5)",0.11,0.0457905710958867
+"Policy B, severity (budget 5)",0.115,0.0457905710958867
+"Policy B, severity (budget 5)",0.12,0.0457905710958867
+"Policy B, severity (budget 5)",0.125,0.0457905710958867
+"Policy B, severity (budget 5)",0.13,0.0457905710958867
+"Policy B, severity (budget 5)",0.135,0.0457905710958867
+"Policy B, severity (budget 5)",0.14,0.0457905710958867
+"Policy B, severity (budget 5)",0.145,0.0457905710958867
+"Policy B, severity (budget 5)",0.15,0.0457905710958867
+"Policy B, severity (budget 5)",0.155,0.0457905710958867
+"Policy B, severity (budget 5)",0.16,0.0457905710958867
+"Policy B, severity (budget 5)",0.165,0.0457905710958867
+"Policy B, severity (budget 5)",0.17,0.0457905710958867
+"Policy B, severity (budget 5)",0.175,0.0457905710958867
+"Policy B, severity (budget 5)",0.18,0.0457905710958867
+"Policy B, severity (budget 5)",0.185,0.0457905710958867
+"Policy B, severity (budget 5)",0.19,0.0457905710958867
+"Policy B, severity (budget 5)",0.195,0.0457905710958867
+"Policy B, severity (budget 5)",0.2,0.0457905710958867
+"Policy B, severity (budget 5)",0.205,0.0457905710958867
+"Policy B, severity (budget 5)",0.21,0.0457905710958867
+"Policy B, severity (budget 5)",0.215,0.0457905710958867
+"Policy B, severity (budget 5)",0.22,0.0457905710958867
+"Policy B, severity (budget 5)",0.225,0.0457905710958867
+"Policy B, severity (budget 5)",0.23,0.0457905710958867
+"Policy B, severity (budget 5)",0.235,0.0457905710958867
+"Policy B, severity (budget 5)",0.24,0.0457905710958867
+"Policy B, severity (budget 5)",0.245,0.0457905710958867
+"Policy B, severity (budget 5)",0.25,0.0457905710958867
+"Policy B, severity (budget 5)",0.255,0.0457905710958867
+"Policy B, severity (budget 5)",0.26,0.0457905710958867
+"Policy B, severity (budget 5)",0.265,0.0457905710958867
+"Policy B, severity (budget 5)",0.27,0.0457905710958867
+"Policy B, severity (budget 5)",0.275,0.0457905710958867
+"Policy B, severity (budget 5)",0.28,0.0457905710958867
+"Policy B, severity (budget 5)",0.285,0.0457905710958867
+"Policy B, severity (budget 5)",0.29,0.0457905710958867
+"Policy B, severity (budget 5)",0.295,0.0457905710958867
+"Policy B, severity (budget 5)",0.3,0.0457905710958867
+"Policy D, context (budget 5)",0.01,0.00952633377015299
+"Policy D, context (budget 5)",0.015,0.00691187768324263
+"Policy D, context (budget 5)",0.02,0.00427074347299644
+"Policy D, context (budget 5)",0.025,0.00160252070674773
+"Policy D, context (budget 5)",0.03,-0.00109320951069941
+"Policy D, context (budget 5)",0.035,-0.00381687475630664
+"Policy D, context (budget 5)",0.04,-0.00656891151488893
+"Policy D, context (budget 5)",0.045,-0.00934976541230455
+"Policy D, context (budget 5)",0.05,-0.0121598914560088
+"Policy D, context (budget 5)",0.055,-0.0149997542832442
+"Policy D, context (budget 5)",0.06,-0.0178698284171524
+"Policy D, context (budget 5)",0.065,-0.0207705985311024
+"Policy D, context (budget 5)",0.07,-0.0237025597215465
+"Policy D, context (budget 5)",0.075,-0.0266662177897251
+"Policy D, context (budget 5)",0.08,-0.0296620895325578
+"Policy D, context (budget 5)",0.085,-0.0326907030430717
+"Policy D, context (budget 5)",0.09,-0.0357525980207342
+"Policy D, context (budget 5)",0.095,-0.0388483260920724
+"Policy D, context (budget 5)",0.1,-0.0419784511419812
+"Policy D, context (budget 5)",0.105,-0.0451435496561346
+"Policy D, context (budget 5)",0.11,-0.0483442110749416
+"Policy D, context (budget 5)",0.115,-0.0515810381594977
+"Policy D, context (budget 5)",0.12,-0.0548546473700147
+"Policy D, context (budget 5)",0.125,-0.0581656692572233
+"Policy D, context (budget 5)",0.13,-0.0615147488672734
+"Policy D, context (budget 5)",0.135,-0.0649025461606767
+"Policy D, context (budget 5)",0.14,-0.0683297364458638
+"Policy D, context (budget 5)",0.145,-0.0717970108279536
+"Policy D, context (budget 5)",0.15,-0.0753050766733621
+"Policy D, context (budget 5)",0.155,-0.0788546580909056
+"Policy D, context (budget 5)",0.16,-0.0824464964300866
+"Policy D, context (budget 5)",0.165,-0.0860813507972817
+"Policy D, context (budget 5)",0.17,-0.0897599985905876
+"Policy D, context (budget 5)",0.175,-0.0934832360541153
+"Policy D, context (budget 5)",0.18,-0.0972518788525642
+"Policy D, context (budget 5)",0.185,-0.101066762666945
+"Policy D, context (budget 5)",0.19,-0.104928743812367
+"Policy D, context (budget 5)",0.195,-0.108838699878851
+"Policy D, context (budget 5)",0.2,-0.112797530396166
+"Policy D, context (budget 5)",0.205,-0.116806157523761
+"Policy D, context (budget 5)",0.21,-0.120865526766895
+"Policy D, context (budget 5)",0.215,-0.124976607720134
+"Policy D, context (budget 5)",0.22,-0.129140394839439
+"Policy D, context (budget 5)",0.225,-0.133357908244155
+"Policy D, context (budget 5)",0.23,-0.13763019455023
+"Policy D, context (budget 5)",0.235,-0.141958327736124
+"Policy D, context (budget 5)",0.24,-0.146343410042885
+"Policy D, context (budget 5)",0.245,-0.15078657291
+"Policy D, context (budget 5)",0.25,-0.155288977948676
+"Policy D, context (budget 5)",0.255,-0.159851817954315
+"Policy D, context (budget 5)",0.26,-0.16447631796003
+"Policy D, context (budget 5)",0.265,-0.16916373633317
+"Policy D, context (budget 5)",0.27,-0.1739153659169
+"Policy D, context (budget 5)",0.275,-0.178732535219027
+"Policy D, context (budget 5)",0.28,-0.18361660965035
+"Policy D, context (budget 5)",0.285,-0.188568992814978
+"Policy D, context (budget 5)",0.29,-0.193591127855165
+"Policy D, context (budget 5)",0.295,-0.198684498853368
+"Policy D, context (budget 5)",0.3,-0.203850632294403
+"Interrupt none",0.01,0
+"Interrupt none",0.015,0
+"Interrupt none",0.02,0
+"Interrupt none",0.025,0
+"Interrupt none",0.03,0
+"Interrupt none",0.035,0
+"Interrupt none",0.04,0
+"Interrupt none",0.045,0
+"Interrupt none",0.05,0
+"Interrupt none",0.055,0
+"Interrupt none",0.06,0
+"Interrupt none",0.065,0
+"Interrupt none",0.07,0
+"Interrupt none",0.075,0
+"Interrupt none",0.08,0
+"Interrupt none",0.085,0
+"Interrupt none",0.09,0
+"Interrupt none",0.095,0
+"Interrupt none",0.1,0
+"Interrupt none",0.105,0
+"Interrupt none",0.11,0
+"Interrupt none",0.115,0
+"Interrupt none",0.12,0
+"Interrupt none",0.125,0
+"Interrupt none",0.13,0
+"Interrupt none",0.135,0
+"Interrupt none",0.14,0
+"Interrupt none",0.145,0
+"Interrupt none",0.15,0
+"Interrupt none",0.155,0
+"Interrupt none",0.16,0
+"Interrupt none",0.165,0
+"Interrupt none",0.17,0
+"Interrupt none",0.175,0
+"Interrupt none",0.18,0
+"Interrupt none",0.185,0
+"Interrupt none",0.19,0
+"Interrupt none",0.195,0
+"Interrupt none",0.2,0
+"Interrupt none",0.205,0
+"Interrupt none",0.21,0
+"Interrupt none",0.215,0
+"Interrupt none",0.22,0
+"Interrupt none",0.225,0
+"Interrupt none",0.23,0
+"Interrupt none",0.235,0
+"Interrupt none",0.24,0
+"Interrupt none",0.245,0
+"Interrupt none",0.25,0
+"Interrupt none",0.255,0
+"Interrupt none",0.26,0
+"Interrupt none",0.265,0
+"Interrupt none",0.27,0
+"Interrupt none",0.275,0
+"Interrupt none",0.28,0
+"Interrupt none",0.285,0
+"Interrupt none",0.29,0
+"Interrupt none",0.295,0
+"Interrupt none",0.3,0
+"Policy D score swept as if a probability",0.01,0.0429122659889808
+"Policy D score swept as if a probability",0.015,0.038058488692735
+"Policy D score swept as if a probability",0.02,0.0331573935864795
+"Policy D score swept as if a probability",0.025,0.0282065863045581
+"Policy D score swept as if a probability",0.03,0.023206973091022
+"Policy D score swept as if a probability",0.035,0.0181562519423563
+"Policy D score swept as if a probability",0.04,0.0130543294790905
+"Policy D score swept as if a probability",0.045,0.00790040149209484
+"Policy D score swept as if a probability",0.05,0.00269222163155187
+"Policy D score swept as if a probability",0.055,-0.00256992504277836
+"Policy D score swept as if a probability",0.06,-0.00788689970345627
+"Policy D score swept as if a probability",0.065,-0.0132595819438457
+"Policy D score swept as if a probability",0.07,-0.018690908476801
+"Policy D score swept as if a probability",0.075,-0.0241734870346531
+"Policy D score swept as if a probability",0.08,-0.0297044740377246
+"Policy D score swept as if a probability",0.085,-0.0352929495337901
+"Policy D score swept as if a probability",0.09,-0.0409425392771814
+"Policy D score swept as if a probability",0.095,-0.0466547050342534
+"Policy D score swept as if a probability",0.1,-0.0524249235018549
+"Policy D score swept as if a probability",0.105,-0.0582600675219896
+"Policy D score swept as if a probability",0.11,-0.0641616877330048
+"Policy D score swept as if a probability",0.115,-0.0701313698159225
+"Policy D score swept as if a probability",0.12,-0.0761633503110391
+"Policy D score swept as if a probability",0.125,-0.0822659698340058
+"Policy D score swept as if a probability",0.13,-0.0884368668924494
+"Policy D score swept as if a probability",0.135,-0.094681451690535
+"Policy D score swept as if a probability",0.14,-0.100970624334439
+"Policy D score swept as if a probability",0.145,-0.107343647736236
+"Policy D score swept as if a probability",0.15,-0.113801842327009
+"Policy D score swept as if a probability",0.155,-0.12033758687108
+"Policy D score swept as if a probability",0.16,-0.126969512926349
+"Policy D score swept as if a probability",0.165,-0.133676647355185
+"Policy D score swept as if a probability",0.17,-0.140443710447955
+"Policy D score swept as if a probability",0.175,-0.147220259679303
+"Policy D score swept as if a probability",0.18,-0.154138230975854
+"Policy D score swept as if a probability",0.185,-0.161016987165057
+"Policy D score swept as if a probability",0.19,-0.167693829567515
+"Policy D score swept as if a probability",0.195,-0.174527114225737
+"Policy D score swept as if a probability",0.2,-0.181287064366758
+"Policy D score swept as if a probability",0.205,-0.188308995452944
+"Policy D score swept as if a probability",0.21,-0.195135310967916
+"Policy D score swept as if a probability",0.215,-0.201980112293292
+"Policy D score swept as if a probability",0.22,-0.208866494333201
+"Policy D score swept as if a probability",0.225,-0.215790719593571
+"Policy D score swept as if a probability",0.23,-0.222890326927804
+"Policy D score swept as if a probability",0.235,-0.230051058938925
+"Policy D score swept as if a probability",0.24,-0.237129285071923
+"Policy D score swept as if a probability",0.245,-0.244579943005004
+"Policy D score swept as if a probability",0.25,-0.251816548873063
+"Policy D score swept as if a probability",0.255,-0.25925424463159
+"Policy D score swept as if a probability",0.26,-0.266625584668315
+"Policy D score swept as if a probability",0.265,-0.273692503890993
+"Policy D score swept as if a probability",0.27,-0.281226062451569
+"Policy D score swept as if a probability",0.275,-0.288506089504464
+"Policy D score swept as if a probability",0.28,-0.295780792571932
+"Policy D score swept as if a probability",0.285,-0.303084713493877
+"Policy D score swept as if a probability",0.29,-0.310774119656333
+"Policy D score swept as if a probability",0.295,-0.317651717720164
+"Policy D score swept as if a probability",0.3,-0.324878241258322

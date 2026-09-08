@@ -1,0 +1,5 @@
+"subgroup","alerts","patients","major_alerts","major_prev","auc_D","burden_B","major_kept_B","burden_D","major_kept_D"
+"All alerts",36929,524,1938,0.0525,0.5393,1691,87.3,19372,28
+"Older adults (65+)",25732,135,1471,0.0572,0.5574,1264,85.9,11984,18.6
+"High polypharmacy (5+ ing.)",33437,301,1785,0.0534,0.5443,1557,87.2,15999,23.9
+"Renal-relevant condition",27340,69,1433,0.0524,0.6104,1226,85.6,12279,18.5
