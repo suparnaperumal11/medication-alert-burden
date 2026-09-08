@@ -5,7 +5,7 @@ prescribing data.
 
 ---
 
-> ## ⚠️ Not an adverse-event prediction model
+> ## 1. ⚠️ Not an adverse-event prediction model
 >
 > **There are no outcome labels in this data.** Synthea records prescribing
 > events and no observed medication-related harm. Nothing here predicts a
@@ -21,7 +21,7 @@ prescribing data.
 
 ---
 
-## The problem
+## 2. The problem
 
 Over 90% of drug–drug interaction alerts are overridden. In one large teaching
 hospital, **88.2% of *very severe* DDI alerts were overridden** across 38,409
@@ -38,13 +38,13 @@ them overridden.
 
 So the problem is not detection. It is allocation of a finite resource.
 
-## The decision this supports
+## 3. The decision this supports
 
 A pharmacy informatics lead deciding **which alerts interrupt a prescriber,
 which are passive, and which are batched or suppressed** — and what that choice
 costs in coverage of serious interactions.
 
-## Two layers, kept separate
+### Two layers, kept separate
 
 | Layer | Question | What it is |
 |---|---|---|
@@ -53,10 +53,27 @@ costs in coverage of serious interactions.
 
 ---
 
-## What it does — headline results
+## 4. What it does — headline results
+
+### The finding, first
+
+**Context-aware prioritisation lost to a plain severity rule by 59.3 percentage
+points, at 11× the burden. It was not retuned.**
+
+**Patient context tells you which patients are complex. It does not tell you
+which interactions are dangerous.** Those are different questions, and only a
+severity grade answers the second.
+
+**The practical recommendation is therefore the simple system** — the rule a
+pharmacy lead can explain in a sentence and defend in a governance meeting.
+Detail in [section 7](#7-can-a-simple-rule-outperform-the-complex-policy).
+
+### The burden it was measured against
 
 **36,929 alerts** across **20,922 prescriptions**, **951 patients** and **472
-practices** over **1,826 days** (2021-09-07 to 2026-09-07).
+practices** over **1,826 days** (2021-09-07 to 2026-09-07). The cohort contains
+1,127 generated patients; **951 of them received at least one prescription
+inside the analysis window** and form the denominator throughout.
 
 - **3.17 alerts per patient-prescribing-day**; 6.51 on days that alert at all
 - 1.77 alerts per prescription; 38.8 per patient over five years
@@ -294,8 +311,11 @@ suppression has nothing left above it to suppress. C still moves 26,277 alerts
 from passive to batch, so its entire effect lands on what a pharmacist reviews
 later.
 
-**The practical recommendation is the simple system** — one a pharmacy lead can
-explain in a sentence and defend in a governance meeting.
+**So the recommendation is Policy B**, and the reason is stronger than "it
+scored better". A severity rule is auditable against a published knowledge base,
+changes only when that knowledge base changes, and can be explained to a
+prescriber who asks why they were interrupted. Policy D matched none of that and
+lost on the numbers as well — there is nothing left to trade off.
 
 ---
 
@@ -333,7 +353,7 @@ costing Major coverage quickly: 87.3% at budget 5, 62.5% at 3, 31.3% at 1. **The
 knee is between budgets 5 and 3.** Under Policy A, by contrast, every burden
 reduction is paid for immediately in safety, because there is no ordering.
 
-## Dashboard
+### Dashboard
 
 An interactive policy simulator: policy selector, budget slider, subgroup
 filter, KPI cards, the frontier, and top alert-generating pairs.
@@ -407,7 +427,8 @@ cannot simply be lifted into a commercial product.
 ```bash
 # 1. Generate the cohort. This exact command reproduces the dataset.
 #    -s seeds the population, -cs seeds clinician generation.
-#    Produces 1,127 patients (1,000 living + 127 deceased).
+#    Produces 1,127 patients (1,000 living + 127 deceased); 951 of them
+#    receive a prescription inside the 2021-2026 analysis window.
 java -jar synthea-with-dependencies.jar \
   -p 1000 -s 42 -cs 42 \
   --exporter.baseDirectory ./data/raw/synthea \
