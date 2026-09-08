@@ -633,3 +633,42 @@ needless interruptions. A package call hides the one term that carries the
 argument. Threshold range 1–30%: past ~20% the stated willingness-to-be-
 interrupted exceeds the 5.25% base rate and every strategy collapses.
 
+---
+
+## Stage 9 — Dashboard
+
+**Streamlit shipped; Power BI deferred.** Power BI Desktop is not installed on
+this machine. Rather than claim a deliverable that is not in the repo, the
+Streamlit app is the runnable dashboard and
+`dashboard/POWERBI_DATA_CONTRACT.md` specifies exactly what a `.pbix` binds to —
+tables, columns, the DAX measures, and the five things any shipped page must
+carry. The `.pbix` can then be built without re-deriving anything.
+
+The contract flags one trap explicitly: `Patient-days` must be a distinct count
+of the **patient-date pair**, not of dates. Counting dates alone divides by
+~1,600 instead of 5,677 and inflates every rate by about 3.5×.
+
+**It simulates a decision rather than displaying data.** Policy selector, budget
+slider, subgroup filter, four KPI cards, the frontier as the main visual, top
+pairs as the secondary. Selecting Policy B or C surfaces a note that their
+interrupt sets are identical; selecting D surfaces that it failed its
+pre-registered test and has not been retuned. A dashboard is where caveats go
+to die, so the ones that matter are attached to the controls that would
+otherwise mislead.
+
+**Screenshots are generated, not hand-taken** (`dashboard/capture_screenshots.py`),
+so they can be regenerated when numbers change and cannot drift out of step with
+the analysis. Two things had to be worked around:
+
+- Chrome's `--screenshot` with `--virtual-time-budget` captured only Streamlit's
+  loading skeletons. Streamlit renders over a websocket after page load, and
+  virtual time does not wait for that. Driven with Playwright instead, waiting on
+  a real `stMetric` selector.
+- `full_page=True` does not work: Streamlit scrolls inside its own container, so
+  the document never grows. A tall viewport (1500×2650) is what actually captures
+  the page.
+
+Playwright uses the Chrome already installed (`channel="chrome"`), so no browser
+download was needed. It is a tooling dependency for producing screenshots, not an
+analysis dependency, and is deliberately kept out of `requirements.txt`.
+
