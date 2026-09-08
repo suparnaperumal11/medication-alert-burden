@@ -489,10 +489,10 @@ retain ≥5 pp more Major alerts than B at equal or lower burden.
 Margin **−59.3 pp**, at 11× the burden. Not close. **Policy D has not been
 retuned**, per §10.
 
-Worse: **D is beaten by Policy A — random selection — at every budget below
-10.** At budget 5, A retains 33.1% of Major alerts against D's 28.0% on an
-identical interrupt count. A context-aware ranking performs *worse than
-arbitrary*.
+Worse: **D is beaten by Policy A — arbitrary selection — at every budget below
+10.** At budget 5, A retains 32.7% of Major alerts against D's 28.0% on an
+identical interrupt count; at budget 3, 21.3% against 12.0%. A context-aware
+ranking performs *worse than arbitrary*.
 
 ### Why — and this is the substantive finding
 
@@ -714,4 +714,68 @@ this project whose output looked entirely plausible — after the RxNorm groupin
 bug in Stage 2 and the eight-of-fourteen DDInter download. All three were caught
 by checking a number against a different number that should have agreed with it,
 which is the only method that has actually worked here.
+
+---
+
+## Stage 11 — Reproducibility, caught at the final check
+
+Re-running the committed pipeline as a pre-push check produced **different
+numbers for Policy A**: Major captured at budget 5 moved 641 → 578 → 633 across
+runs. The seed had been fixed since Stage 7. The seed was not the problem.
+
+**Three independent sources of run-to-run variation, none of them the seed:**
+
+1. **`rng.permutation()` assigns positionally.** Policy A's whole definition is
+   an arbitrary ordering, drawn with `default_rng(42)`. But the alert table
+   arrives from a DuckDB `GROUP BY`, whose row order is not guaranteed stable.
+   Same seed, different rows, different arbitrary ranks — so which alerts
+   survived a budget changed every run. `rank(method="first")` in Policy D had
+   the same exposure. Fixed by sorting to a canonical, total key *before*
+   drawing the permutation.
+
+2. **pandas' default sort is not stable.** Policy C's repeat detection sorts by
+   (patient, pair, time) and calls `shift(1)`. Ties are common — one patient can
+   have several alerts for the same pair at the identical timestamp — and
+   quicksort orders tied rows arbitrarily, so `shift(1)` looked at a different
+   "previous" alert between runs. Fixed with `kind="mergesort"` and a
+   tie-breaking column.
+
+3. **`ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC)`** numbers tied pairs in
+   whatever order DuckDB produces. 7,103 of 36,929 rows got a different
+   `pair_rank` between two runs. This one did *not* move any result — the top
+   ten pairs are not tied, so `pair_is_high_volume` was stable — but the
+   committed artefact was not reproducible. Fixed with an explicit tie-break on
+   the pair names.
+
+Verified by running the full chain three times and hashing both the budget table
+and the assignment table: identical.
+
+**"Fixed seed" is not the same as "reproducible".** A seed only determines the
+random draw; it says nothing about the order of the data the draw is applied to,
+and every one of these bugs sat downstream of a correctly fixed seed. Anything
+that assigns by *position* — a permutation, a rank tie-break, a `shift()` — needs
+a total order established first, or it is reproducible only by luck.
+
+**Corrected Policy A figures** (the only results affected; B, C and D unchanged,
+and the D-does-not-beat-B verdict unchanged at −59.3 pp):
+
+| Budget | Major retained, was | now |
+|---|---:|---:|
+| 10/patient-day | 54.6% | 54.4% |
+| 5/patient-day | 33.1% | 32.7% |
+| 3/patient-day | 20.4% | 21.3% |
+| 1/patient-day | 7.8% | 7.0% |
+
+D still loses to arbitrary selection at every budget below 10.
+
+### Final pre-push state
+
+- **0 files tracked under `data/` or `output/`**, verified with `git ls-files`
+- 44 tracked files, **3.9 MB** — accounted for: 1.6 MB `policy_assignments.parquet`
+  (the dashboard's data source), 1.9 MB of four dashboard screenshots, 0.25 MB of
+  analysis figures, the rest source and prose
+- Redundant derived tables removed once confirmed fully contained in
+  `policy_assignments.parquet`
+- Working tree clean; no `CLAUDE.md`, as required
+- Full pipeline re-runs end to end and reproduces every committed figure
 

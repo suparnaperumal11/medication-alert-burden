@@ -254,7 +254,8 @@ at the 5-per-patient-day budget, at equal or lower burden.**
 | D — context-aware | 19,372 | 1.66 | 28.0% |
 
 **Margin: −59.3 pp, at 11× the burden.** D also **loses to Policy A — arbitrary
-selection — at every budget below 10.** Policy D was **not retuned**.
+selection — at every budget below 10** (at budget 5: 32.7% for arbitrary against
+D's 28.0%, on an identical interrupt count). Policy D was **not retuned**.
 
 ### Why context fails, which is the substantive result
 
@@ -310,10 +311,10 @@ patient at a time, so this is the interruption they actually experience.
 | Budget | Alerts shown | % of total | Major captured |
 |---|---:|---:|---:|
 | Unlimited | 36,929 | 100% | 100% |
-| 10 / patient-day | 27,609 | 74.8% | 54.6% |
-| 5 / patient-day | 19,372 | 52.5% | 33.1% |
-| 3 / patient-day | 13,975 | 37.8% | 20.4% |
-| 1 / patient-day | 5,677 | 15.4% | 7.8% |
+| 10 / patient-day | 27,609 | 74.8% | 54.4% |
+| 5 / patient-day | 19,372 | 52.5% | 32.7% |
+| 3 / patient-day | 13,975 | 37.8% | 21.3% |
+| 1 / patient-day | 5,677 | 15.4% | 7.0% |
 
 **Policy B — severity only**
 

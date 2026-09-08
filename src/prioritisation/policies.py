@@ -109,8 +109,22 @@ def policy_d_score(f: pd.DataFrame) -> pd.Series:
 
 def base_tiers(df: pd.DataFrame) -> pd.DataFrame:
     """Base tier and priority order for each policy, before any budget."""
+    # Sort to a canonical order BEFORE drawing the seeded permutation.
+    #
+    # A fixed seed alone does not make this reproducible. rng.permutation()
+    # assigns values positionally, and the alert table arrives from a DuckDB
+    # GROUP BY, whose row order is not guaranteed stable between runs. Without
+    # this sort, the same seed lands different arbitrary ranks on different
+    # alerts each run, and Policy A -- whose whole definition is an arbitrary
+    # ordering -- silently returns different Major-capture figures. It moved
+    # 641 -> 578 Major alerts at budget 5 between two runs before this was
+    # fixed. rank(method="first") in Policy D has the same exposure.
+    #
+    # The key is unique per alert, so the order is total and deterministic.
+    df = (df.sort_values(["patient_id", "start_ts", "trigger_rx_id",
+                          "pair_lo", "pair_hi"], kind="mergesort")
+            .reset_index(drop=True))
     rng = np.random.default_rng(SEED)
-    df = df.copy()
     df["_arbitrary"] = rng.permutation(len(df))
 
     # --- Policy A: everything interrupts.
@@ -128,7 +142,13 @@ def base_tiers(df: pd.DataFrame) -> pd.DataFrame:
     # unless Major. Major always survives -- without that carve-out, frequency
     # suppression wins the burden comparison by silencing the alerts the safety
     # metric exists to protect (criteria.md section 6).
-    df = df.sort_values(["patient_id", "pair_lo", "pair_hi", "start_ts"])
+    # kind="mergesort" for a *stable* sort. The default quicksort reorders tied
+    # rows arbitrarily, and ties are common here -- the same patient can have
+    # several alerts for one pair at the identical timestamp. shift(1) below
+    # then looks at a different "previous" alert between runs, so the recent
+    # repeat flag, and with it tier_C, would vary despite the fixed seed.
+    df = df.sort_values(["patient_id", "pair_lo", "pair_hi", "start_ts",
+                         "trigger_rx_id"], kind="mergesort")
     prev = df.groupby(["patient_id", "pair_lo", "pair_hi"])["start_ts"].shift(1)
     days_since = (df.start_ts - prev).dt.days
     recent_repeat = days_since.notna() & (days_since <= C_REPEAT_WINDOW_DAYS)
@@ -181,6 +201,11 @@ def main() -> int:
             col = f"assign_{p}_{'unlim' if b is None else b}"
             df[col] = apply_budget(df, p, b)
 
+    # Canonical output order, so the committed artefact is byte-comparable
+    # between runs rather than merely equivalent.
+    df = (df.sort_values(["patient_id", "start_ts", "trigger_rx_id",
+                          "pair_lo", "pair_hi"], kind="mergesort")
+            .reset_index(drop=True))
     df.to_parquet(OUT, index=False)
 
     n_major = int((df.severity == "Major").sum())
