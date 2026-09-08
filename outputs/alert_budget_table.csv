@@ -1,0 +1,21 @@
+policy,policy_name,budget,alerts_shown,pct_of_total,interrupts_per_patient_day,major_captured,pct_major_captured,major_combos_ever_notified,pct_major_combos_notified,passive,batch
+A,Alert everything,Unlimited,36929,100.0,6.51,1938,100.0,78,100.0,0,0
+A,Alert everything,10/patient-day,27609,74.8,4.86,1059,54.6,77,98.7,9320,0
+A,Alert everything,5/patient-day,19372,52.5,3.41,641,33.1,75,96.2,17557,0
+A,Alert everything,3/patient-day,13975,37.8,2.46,395,20.4,74,94.9,22954,0
+A,Alert everything,1/patient-day,5677,15.4,1.0,151,7.8,57,73.1,31252,0
+B,Severity-only,Unlimited,1938,5.2,0.34,1938,100.0,78,100.0,32641,2350
+B,Severity-only,10/patient-day,1938,5.2,0.34,1938,100.0,78,100.0,32641,2350
+B,Severity-only,5/patient-day,1691,4.6,0.3,1691,87.3,78,100.0,32888,2350
+B,Severity-only,3/patient-day,1211,3.3,0.21,1211,62.5,78,100.0,33368,2350
+B,Severity-only,1/patient-day,606,1.6,0.11,606,31.3,74,94.9,33973,2350
+C,Frequency suppression,Unlimited,1938,5.2,0.34,1938,100.0,78,100.0,6364,28627
+C,Frequency suppression,10/patient-day,1938,5.2,0.34,1938,100.0,78,100.0,6364,28627
+C,Frequency suppression,5/patient-day,1691,4.6,0.3,1691,87.3,78,100.0,6611,28627
+C,Frequency suppression,3/patient-day,1211,3.3,0.21,1211,62.5,78,100.0,7091,28627
+C,Frequency suppression,1/patient-day,606,1.6,0.11,606,31.3,74,94.9,7696,28627
+D,Context-aware,Unlimited,36929,100.0,6.51,1938,100.0,78,100.0,0,0
+D,Context-aware,10/patient-day,27609,74.8,4.86,1248,64.4,73,93.6,9320,0
+D,Context-aware,5/patient-day,19372,52.5,3.41,542,28.0,60,76.9,17557,0
+D,Context-aware,3/patient-day,13975,37.8,2.46,233,12.0,39,50.0,22954,0
+D,Context-aware,1/patient-day,5677,15.4,1.0,99,5.1,24,30.8,31252,0
