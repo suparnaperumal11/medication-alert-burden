@@ -16,6 +16,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 ASSIGN = Path("outputs/policy_assignments.parquet")
+PPD = Path("outputs/patient_prescribing_days.csv")
 OUT = Path("outputs")
 
 BUDGETS = [None, 10, 5, 3, 1]
@@ -32,8 +33,19 @@ def main() -> int:
     total = len(df)
     major = df[df.severity == "Major"]
     n_major = len(major)
-    pt_days = df.groupby(["patient_id", "start_date"]).ngroups
     major_combos = major.groupby(["patient_id", "pair_lo", "pair_hi"]).ngroups
+
+    # THE DENOMINATOR. It must be every patient-prescribing-day in the window
+    # (11,655), not just the days that happen to generate an alert (5,677).
+    # Grouping the alert table would give the latter and silently report a rate
+    # roughly twice as large under the same name that Stage 4 and
+    # eval/criteria.md use -- the same metric with two different denominators
+    # across stages. Read the prescribing-day count from the prescribing data
+    # instead, per patient, so subgroup rates are well defined too.
+    ppd = pd.read_csv(PPD)
+    pt_days = int(ppd.prescribing_days.sum())
+    alerting_days = df.groupby(["patient_id", "start_date"]).ngroups
+    assert pt_days >= alerting_days, "prescribing days cannot be fewer than alerting days"
 
     rows = []
     for p, label in POLICIES.items():
@@ -62,8 +74,9 @@ def main() -> int:
     t.to_csv(OUT / "alert_budget_table.csv", index=False)
 
     print(f"  Denominators: {total:,} alerts, {n_major:,} Major, "
-          f"{pt_days:,} patient-prescribing-days, {major_combos:,} distinct Major "
-          f"(patient, pair) combinations\n")
+          f"{pt_days:,} patient-prescribing-days "
+          f"({alerting_days:,} of which generate at least one alert), "
+          f"{major_combos:,} distinct Major (patient, pair) combinations\n")
     print("=" * 100)
     print("ALERT BUDGET TABLE")
     print("=" * 100)
@@ -131,10 +144,13 @@ def main() -> int:
                  fontsize=10.5)
     ax.grid(alpha=0.25, linewidth=0.6)
     ax.legend(frameon=False, fontsize=9, loc="lower right")
+    # Anchor the annotation on B's actual budget-5 point rather than a
+    # hard-coded coordinate, so it cannot drift if the denominator changes.
+    b5 = t[(t.policy == "B") & (t.budget == "5/patient-day")].iloc[0]
     ax.annotate("B and C coincide exactly:\nfrequency suppression acts only\n"
                 "below the interruption line",
-                xy=(0.30, 87.3), xytext=(1.15, 72),
-                fontsize=8, color="#c2410c",
+                xy=(b5.interrupts_per_patient_day, b5.pct_major_captured),
+                xytext=(0.55, 68), fontsize=8, color="#c2410c",
                 arrowprops=dict(arrowstyle="->", color="#c2410c", linewidth=0.9))
     ax.set_ylim(-3, 104)
     fig.text(0.01, 0.01,
