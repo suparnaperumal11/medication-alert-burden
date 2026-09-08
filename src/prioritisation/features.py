@@ -94,8 +94,15 @@ def main() -> int:
       FROM alerts GROUP BY 1, 2
     ),
     pair_volume AS (
+      -- Tie-break the ranking on the pair names. Ordering on COUNT(*) alone
+      -- leaves pairs with equal alert counts to be numbered in whatever order
+      -- DuckDB happens to produce, which differs between runs: 7,103 of 36,929
+      -- rows got a different pair_rank across two runs before this was added.
+      -- The results did not move -- the top ten are not tied -- but the
+      -- committed artefact was not reproducible, and "fixed seed" has to mean
+      -- the whole output, not just the numbers someone happened to check.
       SELECT pair_lo, pair_hi, COUNT(*) AS pair_alerts,
-             ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC) AS pair_rank
+             ROW_NUMBER() OVER (ORDER BY COUNT(*) DESC, pair_lo, pair_hi) AS pair_rank
       FROM alerts GROUP BY 1, 2
     ),
     repeats AS (

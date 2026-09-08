@@ -190,7 +190,14 @@ def main() -> int:
               f"{a[['pair_lo','pair_hi']].drop_duplicates().shape[0]:>4} distinct pairs")
 
         if rule == "assume_active":
-            a.to_parquet(OUT_DIR / "alerts_primary.parquet", index=False)
+            # Canonical row order on write. DuckDB does not guarantee GROUP BY
+            # output order, and anything downstream that assigns by position --
+            # Policy A's seeded permutation, Policy D's rank tie-break -- would
+            # otherwise vary run to run despite a fixed seed.
+            (a.sort_values(["patient_id", "start_ts", "trigger_rx_id",
+                            "pair_lo", "pair_hi"], kind="mergesort")
+              .reset_index(drop=True)
+              .to_parquet(OUT_DIR / "alerts_primary.parquet", index=False))
 
     s = pd.DataFrame(summaries)
     s.to_csv(OUT_DIR / "overlap_sensitivity.csv", index=False)
