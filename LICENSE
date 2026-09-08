@@ -1,0 +1,109 @@
+# Licence
+
+This repository contains two kinds of material under two different licences.
+Read both before reusing anything.
+
+---
+
+## 1. Source code — MIT
+
+Applies to everything under `src/`, `R/`, `dashboard/*.py`, and the prose in
+`README.md`, `NOTES.md` and `eval/criteria.md`.
+
+```
+MIT License
+
+Copyright (c) 2026 Suparna Perumal
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+## 2. Derived data tables — CC BY-NC-SA 4.0
+
+**Applies to the derived tables in `outputs/` that carry DDInter content.**
+
+DDInter's download data are published under
+[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) —
+**non-commercial** and **ShareAlike**. No raw DDInter download is committed to
+this repository (`src/ingest/fetch_ddinter.py` retrieves it, and
+`data/` is gitignored), but several committed tables are *adaptations* of it
+because they carry DDInter drug names, DDInter severity grades, or statistics
+computed directly from them.
+
+Files that inherit CC BY-NC-SA 4.0:
+
+| File | Why |
+|---|---|
+| `outputs/policy_assignments.parquet` | DDInter drug-pair names and severity grades on every row |
+| `outputs/burden_by_pair.csv` | DDInter pair names and severities |
+| `outputs/burden_by_severity.csv` | Aggregates over DDInter severity |
+| `outputs/ingredient_mapping.csv` | The RxNorm → DDInter name bridge |
+| `outputs/alert_budget_table.csv`, `outputs/r_*.csv` | Statistics computed from DDInter severity |
+
+**What that means for reuse.** You may share and adapt these tables for
+non-commercial purposes, with attribution, and any adaptation must be released
+under the same licence. Commercial use is not permitted by the upstream licence,
+and this repository cannot grant it.
+
+**Attribution for the interaction data:**
+
+> Xiong G, et al. *DDInter: an online drug–drug interaction database towards
+> improving clinical decision-making and patient safety.* Nucleic Acids Research
+> 2022; 50(D1):D1200–D1207.
+>
+> Updated in: *DDInter 2.0: an enhanced drug interaction resource with expanded
+> data coverage, new interaction types, and improved user interface.* Nucleic
+> Acids Research 2025; 53(D1):D1356–D1362.
+>
+> Data retrieved 2026-09-07 from https://ddinter.scbdd.com/download/ under
+> CC BY-NC-SA 4.0.
+
+Retrieval details, file hashes and row counts are recorded in
+`data/raw/ddinter/MANIFEST.json`, produced by the fetch script.
+
+---
+
+## 3. Upstream sources and their terms
+
+| Source | Used for | Licence / terms |
+|---|---|---|
+| [Synthea](https://github.com/synthetichealth/synthea) | Synthetic patients, prescriptions, conditions | Apache 2.0. Output is synthetic; **no real patient data is involved anywhere in this project.** |
+| [RxNorm / RxNav](https://rxnav.nlm.nih.gov/) (US NLM) | Ingredient-level normalisation | Free public API, no account required. RxNorm is subject to the [UMLS licence](https://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/license_agreement.html) for bulk redistribution; only derived ingredient mappings are committed here. |
+| [DDInter](https://ddinter.scbdd.com/) | Interaction pairs and severity | **CC BY-NC-SA 4.0** — see section 2. |
+
+**Deliberately excluded on licence grounds**, and recorded in `NOTES.md`:
+
+- **DrugBank** — licence restricts redistribution.
+- **TWOSIDES** — licence unspecified on Therapeutics Data Commons, so not
+  redistributed.
+
+---
+
+## 4. Scope note
+
+Nothing in this repository is clinically validated, and no part of it should be
+used to make treatment decisions. See the "Not an adverse-event prediction
+model" callout at the top of `README.md` and section 13 of `eval/criteria.md`
+for what this analysis can and cannot establish.
+
+This file records the licensing position as understood by the author from the
+upstream terms cited above. It is not legal advice; if you intend to reuse the
+derived tables commercially, take the question to DDInter directly.
