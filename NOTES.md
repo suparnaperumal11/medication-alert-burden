@@ -429,3 +429,124 @@ corticosteroid from an oral one, so a fifth of this burden rests on exposure
 that may not be systemic. Quantified rather than assumed away, and available as
 a prioritisation feature in Stage 6.
 
+---
+
+## Stage 6 — Prioritisation features
+
+**Leakage enforced mechanically.** `src/prioritisation/features.py` asserts that
+no column in the feature matrix has a severity-derived name, and raises
+`SystemExit` if one does. A warning would have been ignorable; this fails the
+build. Policy D never sees the label it is judged against.
+
+**Every feature is computed as at the instant the alert fires.** The repeat
+counter is a running `ROW_NUMBER()` ordered by time, so an alert cannot be
+scored using notifications that had not happened yet. A live system could not
+have that information either.
+
+**Comorbidity burden counts `(disorder)` rows only.** Synthea's conditions
+table is dominated by social determinants — *Full-time employment (finding)*,
+*Stress (finding)*, *Social isolation (finding)*, *Medication review due
+(situation)* — recorded for nearly every patient. Counting all condition rows
+would have produced a "comorbidity score" that largely measured how thoroughly
+Synthea populated a social history. Renal conditions are enumerated by explicit
+SNOMED code rather than substring match, so the list is auditable.
+
+**Feature realised distributions:** age 75+ on 18,267 alerts; median 9
+concurrently active ingredients; median 13 comorbidities; renal condition on
+74.0% of alerts; median 24 prior notifications of the same warning (max 349).
+
+### A concentration finding that emerged from the features
+
+**69 of the 524 alerting patients (13.2%) have a renal condition, and they
+average 399 alerts each against 21 for everyone else.** Burden concentrates far
+more sharply in patients than in drug pairs: the top-1 pair is 4.7% of alerts,
+but 13% of patients carry 74%. If a real system wanted a lever, patient
+complexity is a stronger one than pair frequency.
+
+---
+
+## Stage 7 — The four policies
+
+### Policy D weights, and why they are not fitted
+
+Weights are assigned by clinical reasoning and stated in
+`src/prioritisation/policies.py`, not learned. Fitting them would make D's
+advantage circular — it would be optimised against the very label
+`criteria.md` forbids it from seeing. Positive: age, polypharmacy, renal
+impairment, comorbidity. Negative: crowded alert days, prior repeats of the
+same warning, high-volume pairs, non-systemic route.
+
+### Result: **D does not beat B. Decisively.**
+
+Pre-registered test (criteria.md §10): at the 5-per-patient-day budget, D must
+retain ≥5 pp more Major alerts than B at equal or lower burden.
+
+| At budget 5/patient-day | Interrupts | Per patient-day | Major retained |
+|---|---:|---:|---:|
+| **B — severity only** | **1,691** | **0.30** | **87.3%** |
+| D — context-aware | 19,372 | 3.41 | 28.0% |
+
+Margin **−59.3 pp**, at 11× the burden. Not close. **Policy D has not been
+retuned**, per §10.
+
+Worse: **D is beaten by Policy A — random selection — at every budget below
+10.** At budget 5, A retains 33.1% of Major alerts against D's 28.0% on an
+identical interrupt count. A context-aware ranking performs *worse than
+arbitrary*.
+
+### Why — and this is the substantive finding
+
+D's score is **almost orthogonal to severity**, and where it correlates, it
+correlates the wrong way.
+
+| Severity | Mean D score | Mean prior notifications | Share that are high-volume pairs |
+|---|---:|---:|---:|
+| Major | 0.15 | 54.5 | 0.0% |
+| Moderate | 0.19 | 53.4 | 34.8% |
+| Unknown | −0.06 | 45.6 | 22.4% |
+| Minor | −0.50 | 42.4 | 68.5% |
+
+Major and Moderate are indistinguishable by D's score (0.15 vs 0.19). And
+**Major alerts have the *highest* mean repeat count of any severity (54.5)** —
+so the repeat penalty, which is the single most powerful burden-reduction lever
+available, systematically demotes exactly the alerts the safety metric protects.
+
+The general statement: **patient context tells you which patients are complex.
+It does not tell you which interactions are dangerous.** Those are different
+questions, and only the second is what a severity grade answers. Polypharmacy,
+age and renal impairment are properties of a person; severity is a property of
+a drug pair. A prioritisation score built from the former cannot recover the
+latter, and in this cohort it actively fights it.
+
+This is the honest answer to the project's central question, and it favours the
+simpler system: a pharmacy lead should deploy the severity rule, which they can
+explain in a sentence, over a context score that is harder to justify and
+performs worse.
+
+### Policy C is identical to Policy B — also a finding
+
+At every budget, C and B produce **exactly the same interrupt set**. Once
+severity routing has already sent every non-Major alert to passive or batch,
+frequency suppression has nothing left above the interruption line to suppress.
+
+C is not inert; it moves **26,277 alerts from passive to batch** (B: 32,641
+passive / 2,350 batch; C: 6,364 passive / 28,627 batch). Its entire effect is
+on what a pharmacist reviews later, not on what interrupts a prescriber. That
+is a real operational difference and worth having — but it is invisible to a
+burden metric defined as interrupt count, which is how `criteria.md` defined it
+in advance. Reported rather than redefined.
+
+### Post-hoc observation — explicitly NOT part of the pre-registered comparison
+
+**1,938 Major alerts arise from only 78 distinct (patient, pair) combinations —
+a 24.8× repeat rate.** Even Policy B's interrupts are ~96% re-notifications. A
+policy that interrupted once per (patient, pair) and then went passive would
+notify 100% of major combinations at roughly 78 interrupts.
+
+This is flagged as an observation, not a result. It was noticed after
+unblinding and evaluating it as a fifth policy would be precisely the
+after-the-fact tuning §10 forbids. It belongs in "what would be needed for real
+use" as a hypothesis to test prospectively — and it would need override data to
+test honestly, since the reason to re-warn is that the first warning may not
+have been read.
+

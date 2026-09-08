@@ -24,3 +24,8 @@ __pycache__/
 # OS / editor noise
 .DS_Store
 Thumbs.db
+
+# Regenerable intermediate. Every column in it is carried into
+# outputs/policy_assignments.parquet by src/prioritisation/policies.py, so
+# committing both would store the same 638 KB twice.
+outputs/alert_features.parquet
