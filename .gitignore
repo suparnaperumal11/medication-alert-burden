@@ -29,3 +29,8 @@ Thumbs.db
 # outputs/policy_assignments.parquet by src/prioritisation/policies.py, so
 # committing both would store the same 638 KB twice.
 outputs/alert_features.parquet
+
+# Regenerable handoff to R (src/prioritisation/export_for_r.py). Several MB
+# of flattened alerts; the committed Stage 8 artefacts are the R script and
+# the figures and tables it writes.
+outputs/alerts_for_r.csv
