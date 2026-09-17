@@ -25,29 +25,10 @@ suppressPackageStartupMessages({
 
 set.seed(42)
 
-# -----------------------------------------------------------------------------
-# R IDIOM NOTES (this project is meant to be explainable, so the idioms are
-# spelled out where they first appear)
-#
-# |>            the native pipe. `x |> f(y)` is exactly `f(x, y)`. It reads
-#               left-to-right so a chain of verbs reads as a sentence.
-# mutate()      add or overwrite columns, vectorised over the whole frame.
-# summarise()   collapse rows to one row per group.
-# group_by()    declares the grouping that summarise() collapses over.
-# .by =         a newer inline alternative to group_by() for a single verb.
-# factor        R's categorical type. Levels control ordering in tables and in
-#               ggplot legends -- set them deliberately or you get alphabetical.
-# ~             the formula interface. `y ~ x` is a *specification*, not a
-#               computation: it names an outcome and predictors and hands them
-#               to a modelling function to interpret.
-# -----------------------------------------------------------------------------
-
 OUT <- "outputs"
 alerts <- read.csv(file.path(OUT, "alerts_for_r.csv"), stringsAsFactors = FALSE)
 
-# Severity as an ordered factor. Ordering matters: without it ggplot and table()
-# sort alphabetically and "Major" lands between "Minor" and "Moderate", which is
-# both ugly and easy to misread.
+# Ordered so Major does not sort between Minor and Moderate alphabetically.
 alerts$severity <- factor(alerts$severity,
                           levels = c("Major", "Moderate", "Unknown", "Minor"))
 
@@ -70,14 +51,7 @@ CAPTION <- paste0(
 # =============================================================================
 # 1. DISCRIMINATION -- does Policy D's score separate Major from non-Major?
 #
-# AUC is computed from ranks rather than by integrating an ROC curve. For a
-# binary outcome the Mann-Whitney identity gives it exactly:
-#
-#     AUC = (mean rank of positives - (n_pos + 1) / 2) / n_neg
-#
-# which is the probability that a randomly chosen Major alert scores above a
-# randomly chosen non-Major one. Writing it this way makes the interpretation
-# visible; calling a package's auc() hides it.
+# From ranks rather than a package call, so the reported quantity stays explicit.
 # =============================================================================
 
 auc_from_ranks <- function(score, label) {
@@ -90,9 +64,7 @@ auc_from_ranks <- function(score, label) {
 auc_d <- auc_from_ranks(alerts$score_D_scaled, alerts$is_major)
 cat(sprintf("\nPolicy D score AUC vs Major: %.4f  (0.5 = no discrimination)\n", auc_d))
 
-# The formula interface. `is_major ~ score_D_scaled` specifies the model; glm()
-# reads that specification. family = binomial() makes it logistic regression.
-# The coefficient answers "does the score move the log-odds of Major at all?"
+# Simple logistic check; inference is not used because alerts are clustered by patient.
 fit <- glm(is_major ~ score_D_scaled, family = binomial(), data = alerts)
 co <- summary(fit)$coefficients
 cat(sprintf("Logistic slope on score: %.3f (SE %.3f, p = %.3g)\n",
@@ -104,13 +76,8 @@ cat("  small; the clustered bootstrap below is the inference that counts.\n")
 # =============================================================================
 # 2. CALIBRATION against the stated reference standard
 #
-# Decile bins rather than a loess smoother. With a near-flat relationship a
-# smoother invites the reader to see structure in noise; binned points with
-# intervals show flatness for what it is.
-#
-# Wilson intervals rather than normal-approximation (Wald) intervals. Wald
-# breaks down badly for proportions near 0, and the Major rate here is ~5%, so
-# several bins would otherwise get intervals crossing zero.
+# Decile bins, not a loess smoother: a smoother invites structure to be read into noise.
+# Wilson intervals are more stable than Wald at low Major prevalence.
 # =============================================================================
 
 wilson_ci <- function(k, n, z = 1.96) {
@@ -139,8 +106,7 @@ calib <- alerts |>
 print(as.data.frame(calib), row.names = FALSE)
 write.csv(calib, file.path(OUT, "r_calibration_bins.csv"), row.names = FALSE)
 
-# ggplot layering: start with the data and aesthetic mapping, then add geoms.
-# Each `+` adds a layer drawn on top of the last.
+# Keep the overall Major rate visible as the reference line.
 p_cal <- ggplot(calib, aes(x = mean_score, y = observed)) +
   geom_hline(yintercept = PREV, linetype = "dashed", colour = "#b91c1c") +
   annotate("text", x = max(calib$mean_score), y = PREV,
