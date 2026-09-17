@@ -90,7 +90,6 @@ def main() -> int:
                   f"{r.interrupts_per_patient_day:>9.2f}{r.major_captured:>12,}"
                   f"{r.pct_major_captured:>9.1f}{r.pct_major_combos_notified:>14.1f}")
 
-    # ------------------------------------------------------ the honest question
     print("\n" + "=" * 100)
     print(f"DOES D BEAT B?  Pre-registered test: at the {DECISION_BUDGET}/patient-day "
           f"budget, D must retain >= {DECISION_MARGIN_PP} pp")

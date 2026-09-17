@@ -47,7 +47,6 @@ def main() -> int:
       WHERE start_date >= DATE '{WINDOW_START}' AND start_date < DATE '{WINDOW_END}')
     """).fetchone()[0]
 
-    # ---------------------------------------------------------------- checks
     section("NORMALISATION SANITY CHECKS (run before reporting concentration)")
     checks = []
     checks.append(("alerts pairing a drug with itself",
@@ -79,7 +78,6 @@ def main() -> int:
     print("    -> distinct ingredient names on either side confirm these are not "
           "one drug\n       matched against itself under two spellings")
 
-    # ------------------------------------------------------------- headline
     section("HEADLINE BURDEN")
     print(f"  Analysis window          {WINDOW_START} to {WINDOW_END} ({WINDOW_DAYS} days)")
     print(f"  Prescriptions in window  {int(den.prescriptions):,}")
@@ -95,14 +93,12 @@ def main() -> int:
           f"({100*a.patient_id.nunique()/den.patients:.1f}% of those prescribed for)")
     print(f"  Distinct interacting pairs {a[['pair_lo','pair_hi']].drop_duplicates().shape[0]:,}")
 
-    # ------------------------------------------------------------- severity
     section("VOLUME BY SEVERITY (DDInter expert-assigned severity, not an outcome)")
     sev = (a.severity.value_counts().rename_axis("severity").reset_index(name="alerts"))
     sev["pct"] = (100 * sev.alerts / len(a)).round(1)
     sev["per_patient_prescribing_day"] = (sev.alerts / pt_days).round(3)
     print(sev.to_string(index=False))
 
-    # --------------------------------------------------------- concentration
     section("CONCENTRATION BY DRUG PAIR")
     pair = (a.groupby(["pair_lo", "pair_hi"]).size()
              .sort_values(ascending=False).reset_index(name="alerts"))
@@ -120,7 +116,6 @@ def main() -> int:
     t["pct"] = (100 * t.alerts / len(a)).round(1)
     print(t[["pair_lo", "pair_hi", "severity", "alerts", "pct", "cum_pct"]].to_string(index=False))
 
-    # ------------------------------------------------------- repeat exposure
     section("REPEAT EXPOSURE -- is this many warnings, or one warning many times?")
     per_pt_pair = a.groupby(["patient_id", "pair_lo", "pair_hi"]).size()
     print(f"  Distinct (patient, pair) combinations   {len(per_pt_pair):,}")
@@ -136,7 +131,6 @@ def main() -> int:
     print(f"    has already had                        "
           f"{100*(len(a)-len(per_pt_pair))/len(a):.1f}%")
 
-    # ------------------------------------------------- concentration by site
     section("CONCENTRATION ACROSS PRACTICES (not a workload rate -- see NOTES.md)")
     prov = a.groupby("provider_id").size().sort_values(ascending=False)
     print(f"  Practices generating >=1 alert  {len(prov):,} of {int(den.providers):,} prescribing")
@@ -145,7 +139,6 @@ def main() -> int:
     for k in (10, 50):
         print(f"  top {k:>2} practices = {100*prov.head(k).sum()/len(a):.1f}% of all alerts")
 
-    # ------------------------------------------------------------- route
     section("HOW MUCH BURDEN DEPENDS ON NON-SYSTEMIC EXPOSURE?")
     ns = a[(a.trigger_route != "systemic") | (a.concurrent_route != "systemic")]
     print(f"  Alerts where at least one side is not systemic  {len(ns):,} "

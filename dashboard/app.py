@@ -132,7 +132,6 @@ st.caption(
     f"window 2021-09-07 to 2026-09-07."
 )
 
-# ------------------------------------------------------------ main: frontier
 st.subheader("Safety-burden frontier")
 st.caption("Each point is one policy at one budget, for the selected "
            "population. Up is safer, left is less burdensome.")
@@ -156,7 +155,6 @@ frontier = pd.DataFrame(rows)
 st.scatter_chart(frontier, x="Interrupts per patient-day",
                  y="% Major retained", color="Policy", height=430)
 
-# ------------------------------------------------------------ budget table
 st.subheader("Alert budget table")
 sel = frontier[frontier.Policy == policy_label][
     ["Budget", "Alerts shown", "% of all alerts",
@@ -181,7 +179,6 @@ if policy == "D":
         "complex, not which interactions are dangerous."
     )
 
-# ------------------------------------------------------- secondary: top pairs
 st.subheader("Top alert-generating pairs")
 pairs = (d.groupby(["pair_lo", "pair_hi", "severity"], observed=True)
            .size().reset_index(name="Alerts")
@@ -195,7 +192,6 @@ pairs = pairs.rename(columns={"pair_lo": "Drug A", "pair_hi": "Drug B",
                               "severity": "DDInter severity"})
 st.dataframe(pairs, hide_index=True, width="stretch")
 
-# ---------------------------------------------------------------- repetition
 rep_combos = d.groupby(["patient_id", "pair_lo", "pair_hi"]).ngroups
 st.subheader("How much of this is repetition?")
 st.markdown(
