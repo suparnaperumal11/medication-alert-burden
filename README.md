@@ -64,9 +64,11 @@ points, at 11× the burden. It was not retuned.**
 which interactions are dangerous.** Those are different questions, and only a
 severity grade answers the second.
 
-**The practical recommendation is therefore the simple system** — the rule a
-pharmacy lead can explain in a sentence and defend in a governance meeting.
-Detail in [section 7](#7-can-a-simple-rule-outperform-the-complex-policy).
+**In this evaluation, the severity rule retained substantially more Major alerts
+at the same budget than the context-aware policy** — and it is also the rule a
+pharmacy lead could explain in a sentence. Whether either would be appropriate
+for clinical deployment would require real prescribing, override and outcome
+data. Detail in [section 7](#7-can-a-simple-rule-outperform-the-complex-policy).
 
 ### The burden it was measured against
 
@@ -311,11 +313,17 @@ suppression has nothing left above it to suppress. C still moves 26,277 alerts
 from passive to batch, so its entire effect lands on what a pharmacist reviews
 later.
 
-**So the recommendation is Policy B**, and the reason is stronger than "it
-scored better". A severity rule is auditable against a published knowledge base,
-changes only when that knowledge base changes, and can be explained to a
-prescriber who asks why they were interrupted. Policy D matched none of that and
-lost on the numbers as well — there is nothing left to trade off.
+**In this evaluation Policy B retained more Major alerts than Policy D at every
+constrained budget, at a fraction of the interrupt burden.** Its other
+properties are not numerical: a severity rule is auditable against a published
+knowledge base, changes only when that knowledge base changes, and can be
+explained to a prescriber who asks why they were interrupted. Policy D offered
+none of those and lost on the numbers as well.
+
+Whether a severity rule would be appropriate for clinical deployment is a
+question this evaluation cannot answer. It would require real prescribing data,
+real override logs and outcome linkage — see
+[section 9](#9-what-would-be-needed-for-real-use).
 
 ---
 
