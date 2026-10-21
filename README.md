@@ -163,6 +163,20 @@ Burden concentrates far harder in **patients** than in pairs: **69 of the 524
 alerting patients (13.2%) have a renal condition and average 399 alerts each,
 against 21 for everyone else.**
 
+### The named next step: notify once, then go passive
+
+**The 1,938 `Major` alerts arise from only 78 distinct (patient, pair)
+combinations — so even the winning severity rule's interrupts are ~96%
+re-notification. Interrupting once per combination and then going passive would
+reach every `Major` combination at roughly 78 interrupts. That is the next
+experiment, and it is deliberately not run here:** the idea came out of these
+results, and [`eval/criteria.md`](eval/criteria.md) forbids devising a policy
+after seeing them — testing it on the data that suggested it is the one thing
+that would make the number untrustworthy. It also needs override data to test
+honestly, since the reason to re-warn is that the first warning may not have
+been read. Fuller version in
+[section 9](#9-what-would-be-needed-for-real-use).
+
 ---
 
 ## 5. What I chose not to build, and why
