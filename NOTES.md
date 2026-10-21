@@ -778,7 +778,7 @@ D still loses to arbitrary selection at every budget below 10.
   analysis figures, the rest source and prose
 - Redundant derived tables removed once confirmed fully contained in
   `policy_assignments.parquet`
-- Working tree clean; no `CLAUDE.md`, as required
+- Working tree clean
 - Full pipeline re-runs end to end and reproduces every committed figure
 
 

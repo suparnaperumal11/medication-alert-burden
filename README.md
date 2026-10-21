@@ -594,5 +594,4 @@ concentration sharper, and its normalisation messier.
 
 ---
 
-*Built with AI assistance; the evaluation design, thresholds and analytical
-decisions are mine.*
+Built with AI assistance; all design decisions, evaluation criteria and analysis are mine.
