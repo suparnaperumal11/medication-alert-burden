@@ -152,8 +152,12 @@ inside the analysis window** and form the denominator throughout.
 a mean of 12.1 repeats, up to **350** for one combination.
 
 Pair concentration is comparatively weak: the top pair is 4.7% of alerts, and
-90 pairs (15.5%) generate 80%. That is roughly an order of magnitude flatter
-than the published 49.8%-from-one-pair figure — see [limitations](#6-the-evaluation-problem).
+90 pairs (15.5%) generate 80%. The published 49.8%-from-one-pair figure is a
+share of *very severe* alerts, not of all alerts, so the like-for-like
+comparison is against `Major` here: the top `Major` pair is **14.0% of `Major`
+alerts** (271 of 1,938). Concentration is **roughly 3.6× flatter**, not the
+order of magnitude an all-alerts-against-very-severe comparison implies — see
+[limitations](#6-the-evaluation-problem).
 
 Burden concentrates far harder in **patients** than in pairs: **69 of the 524
 alerting patients (13.2%) have a renal condition and average 399 alerts each,

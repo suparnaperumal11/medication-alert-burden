@@ -387,10 +387,12 @@ any policy runs.
 **90 pairs — 15.5% of the 580 distinct pairs — generate 80% of alerts.**
 
 The published figure motivating this project was a single pair producing 49.8%
-of all alerts at one hospital. Here the top pair produces 4.7%. **The
-concentration is real but roughly an order of magnitude flatter**, and the
-honest reading is that this is a property of Synthea rather than a
-contradiction of the literature: a 245-product formulary prescribed to
+of **very severe** alerts at one hospital (corrected in Stage 12b — it was
+recorded here as a share of all alerts, which it is not). Here the top pair
+produces 4.7% of all alerts, and the top `Major` pair 14.0% of `Major` alerts.
+**The concentration is real but roughly 3.6× flatter on the like-for-like
+comparison**, and the honest reading is that this is a property of Synthea
+rather than a contradiction of the literature: a 245-product formulary prescribed to
 guidelines cannot produce the long tail of a real hospital, and it has no
 equivalent of the one badly-configured rule that generates half a real system's
 alerts. Reported as a limitation, not as a softer version of the published
@@ -846,3 +848,41 @@ history. Editing a pre-registration document to match what was later learned
 would destroy the only property that makes it worth committing. The claims in
 it are wrong, this entry is the correction, and the README's section 2 is the
 version to read.
+
+### Stage 12b — a fourth instance of the invisible-denominator defect
+
+Verifying the 49.8% figure showed it was **misdescribed, not wrong**. The
+Leuven paper reports 19,143 of 38,409 (49.8%) — and all 38,409 are *very
+severe* DDI alerts, because that is the only alert class the study examined.
+So 49.8% is a share of very severe alerts. The README and Stage 4 above both
+recorded it as a share of **all** alerts.
+
+That made the comparison drawn against it meaningless. "The top pair is 4.7%
+of alerts, roughly an order of magnitude flatter than 49.8%" put this cohort's
+top pair share of *all* alerts against Leuven's top pair share of *very severe*
+alerts. Like for like, from `policy_assignments.parquet`:
+
+| | Top pair share |
+|---|---:|
+| Leuven, very severe DDI alerts | 49.8% |
+| Here, `Major` alerts (271 / 1,938, Prasugrel + Warfarin) | **14.0%** |
+| Here, all alerts (1,742 / 36,929, Hydrochlorothiazide + Insulin human) | 4.7% |
+
+**~3.6× flatter, not ~10×.** The direction of the finding is unchanged and so
+is its interpretation — Synthea's 245-product formulary cannot produce a real
+hospital's concentration — but the magnitude was wrong by a factor of three,
+and it was wrong in the flattering direction, making this project's cohort look
+more unlike the literature than it is.
+
+**This is the fourth bug in this project whose output looked entirely
+plausible**, after the RxNorm grouping bug in Stage 2, the
+eight-of-fourteen DDInter download, and the two-denominators bug in Stage 10.
+Three of the four are the same defect: a rate compared against another rate
+whose denominator was never stated. 4.7% and 49.8% are both real numbers,
+both correctly computed, and the ratio between them means nothing. Nothing in
+the output could have revealed it — the error was in what the numbers were
+*of*, which is not a property the numbers carry.
+
+The habit that caught all four is unchanged: check a number against a
+different number that should agree with it, and state the denominator every
+time, so that a mismatch is visible rather than inferable.
