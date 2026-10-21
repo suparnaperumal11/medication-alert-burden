@@ -426,7 +426,8 @@ An interactive policy simulator: policy selector, budget slider, subgroup
 filter, KPI cards, the frontier, and top alert-generating pairs.
 
 ```bash
-.venv/Scripts/streamlit run dashboard/app.py
+.venv/Scripts/streamlit run dashboard/app.py   # Windows
+.venv/bin/streamlit run dashboard/app.py       # macOS / Linux
 ```
 
 ![Dashboard](dashboard/screenshots/01_policy_b_severity_budget5.png)
@@ -468,6 +469,10 @@ validity.
 Python 3.11, R 4.5+, Java 11+ (for Synthea). R packages: `dplyr`, `tidyr`,
 `ggplot2`, `scales`, `tibble`.
 
+Commands are given for Windows and for macOS/Linux where they differ. The only
+real differences are the virtualenv layout — `.venv/Scripts/` on Windows,
+`.venv/bin/` elsewhere — and whether `Rscript` is on `PATH`.
+
 ### Data sources
 
 | Source | Purpose | Licence |
@@ -503,8 +508,12 @@ java -jar synthea-with-dependencies.jar \
   --exporter.fhir.export false
 
 # 2. Environment
+#    Windows
 py -3.11 -m venv .venv
 .venv/Scripts/python -m pip install -r requirements.txt
+#    macOS / Linux
+python3.11 -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
 
 # 3. Reference data
 python src/ingest/fetch_ddinter.py       # all 14 ATC files
@@ -521,10 +530,15 @@ python src/prioritisation/evaluate.py    # budget table + frontier
 
 # 5. R evaluation
 python src/prioritisation/export_for_r.py
-"C:/Program Files/R/R-4.5.3/bin/Rscript.exe" R/evaluation.R
+Rscript R/evaluation.R
+#    If Rscript is not on PATH — common on Windows, where the R installer
+#    does not add it — call it by full path and match your installed version:
+#      "C:/Program Files/R/R-4.5.3/bin/Rscript.exe" R/evaluation.R
+#    macOS (Homebrew or CRAN) and Linux put Rscript on PATH by default.
 
 # 6. Dashboard
-.venv/Scripts/streamlit run dashboard/app.py
+.venv/Scripts/streamlit run dashboard/app.py   # Windows
+.venv/bin/streamlit run dashboard/app.py       # macOS / Linux
 ```
 
 **Seeds: `-s 42` (population), `-cs 42` (clinicians), `SEED = 42` in

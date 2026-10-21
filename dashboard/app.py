@@ -4,7 +4,8 @@ This is meant to let a pharmacy informatics lead *simulate a decision*, not
 browse a dataset. Pick a policy, set an attention budget, filter to a
 population, and see immediately what it costs in high-severity coverage.
 
-Run:  .venv/Scripts/streamlit run dashboard/app.py
+Run:  .venv/Scripts/streamlit run dashboard/app.py   (Windows)
+      .venv/bin/streamlit run dashboard/app.py       (macOS / Linux)
 
 The headline constraint is repeated on the page rather than buried in a
 footnote: this is not an adverse-event prediction model, and DDInter severity
