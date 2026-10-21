@@ -5,7 +5,42 @@ prescribing data.
 
 ---
 
-> ## 1. ⚠️ Not an adverse-event prediction model
+## 1. The finding
+
+**A context-aware prioritisation policy lost to a one-line severity rule by 59.3
+percentage points, at 11× the interrupt burden. It was not retuned.**
+
+Given a budget of 5 interruptions per patient-prescribing-day:
+
+| Policy | Interrupts | Per patient-prescribing-day | Major alerts retained |
+|---|---:|---:|---:|
+| **B — severity only**: interrupt iff DDInter grades the pair `Major` | **1,691** | **0.15** | **87.3%** |
+| **D — context-aware**: rank on patient features (polypharmacy, age, renal status, repeat count); severity excluded | 19,372 | 1.66 | 28.0% |
+
+Policy D also lost to **arbitrary selection** at every budget below 10. Its
+discrimination against the `Major` label was AUC 0.539, with a patient-clustered
+95% CI of 0.304–0.622 that comfortably contains chance.
+
+**Patient context tells you which patients are complex. It does not tell you
+which interactions are dangerous.** Those are different questions, and only a
+severity grade answers the second. Polypharmacy, age and renal impairment are
+properties of a person; severity is a property of a drug pair. A score built from
+the first cannot recover the second.
+
+This is a **negative result**, and it is the deliverable. The success condition
+for D was fixed in writing before any policy code existed, D missed it in the
+wrong direction, and D was not retuned
+([section 8](#8-can-a-simple-rule-outperform-the-complex-policy) has the full
+comparison).
+
+One caveat belongs with the headline rather than after it: the reference standard
+is an expert-assigned severity grade, not an observed patient outcome, so none of
+this is evidence about harm. Section 2 says why that limit is absolute here, and
+[section 7](#7-the-evaluation-problem) quantifies what it costs.
+
+---
+
+> ## 2. ⚠️ Not an adverse-event prediction model
 >
 > **There are no outcome labels in this data.** Synthea records prescribing
 > events and no observed medication-related harm. Nothing here predicts a
@@ -21,7 +56,7 @@ prescribing data.
 
 ---
 
-## 2. The problem
+## 3. The problem
 
 Override rates for medication-related alerts are high and vary enormously by
 setting: a systematic review of 23 studies found average override rates of
@@ -51,10 +86,7 @@ So the problem is not detection. It is allocation of a finite resource.
 
 Every figure in this section was checked against the primary source, and the
 numbers each source actually supports are stated so the claim can be traced
-without re-reading the paper. Two figures that appeared in an earlier draft of
-this section — "over 90% of DDI alerts are overridden" and "more than half of
-overrides are inappropriate" — did not survive that check and were replaced by
-what the sources say; see [`NOTES.md`](NOTES.md).
+without re-reading the paper.
 
 1. Poly TN, Islam MM, Yang HC, Li YJ. Appropriateness of overridden alerts in
    computerized physician order entry: systematic review. *JMIR Med Inform*.
@@ -92,7 +124,7 @@ what the sources say; see [`NOTES.md`](NOTES.md).
    overrides were appropriate; inappropriate overrides six times as likely to
    be associated with potential and definite ADEs.
 
-## 3. The decision this supports
+## 4. The decision this supports
 
 A pharmacy informatics lead deciding **which alerts interrupt a prescriber,
 which are passive, and which are batched or suppressed** — and what that choice
@@ -107,24 +139,7 @@ costs in coverage of serious interactions.
 
 ---
 
-## 4. What it does — headline results
-
-### The finding, first
-
-**Context-aware prioritisation lost to a plain severity rule by 59.3 percentage
-points, at 11× the burden. It was not retuned.**
-
-**Patient context tells you which patients are complex. It does not tell you
-which interactions are dangerous.** Those are different questions, and only a
-severity grade answers the second.
-
-**In this evaluation, the severity rule retained substantially more Major alerts
-at the same budget than the context-aware policy** — and it is also the rule a
-pharmacy lead could explain in a sentence. Whether either would be appropriate
-for clinical deployment would require real prescribing, override and outcome
-data. Detail in [section 7](#7-can-a-simple-rule-outperform-the-complex-policy).
-
-### The burden it was measured against
+## 5. The burden the policies were measured against
 
 **36,929 alerts** across **20,922 prescriptions**, **951 patients** and **472
 practices** over **1,826 days** (2021-09-07 to 2026-09-07). The cohort contains
@@ -157,7 +172,7 @@ share of *very severe* alerts, not of all alerts, so the like-for-like
 comparison is against `Major` here: the top `Major` pair is **14.0% of `Major`
 alerts** (271 of 1,938). Concentration is **roughly 3.6× flatter**, not the
 order of magnitude an all-alerts-against-very-severe comparison implies — see
-[limitations](#6-the-evaluation-problem).
+[limitations](#7-the-evaluation-problem).
 
 Burden concentrates far harder in **patients** than in pairs: **69 of the 524
 alerting patients (13.2%) have a renal condition and average 399 alerts each,
@@ -174,12 +189,12 @@ results, and [`eval/criteria.md`](eval/criteria.md) forbids devising a policy
 after seeing them — testing it on the data that suggested it is the one thing
 that would make the number untrustworthy. It also needs override data to test
 honestly, since the reason to re-warn is that the first warning may not have
-been read. Fuller version in
-[section 9](#9-what-would-be-needed-for-real-use).
+been read. It is listed among the things real use would need, in
+[section 10](#10-what-would-be-needed-for-real-use).
 
 ---
 
-## 5. What I chose not to build, and why
+## 6. What I chose not to build, and why
 
 **A prescriber-level burden metric.** The obvious headline for this project is
 "alerts per prescriber per day". Synthea's encounter provider is 100% populated
@@ -200,7 +215,7 @@ performance circular, and an opaque model cannot be explained to the person who
 has to sign off on suppressing alerts.
 
 **FAERS integration.** A day of drug normalisation for a heavily caveated
-directional result. Named in [what real use would need](#9-what-would-be-needed-for-real-use).
+directional result. Named in [what real use would need](#10-what-would-be-needed-for-real-use).
 
 **Drug–allergy, drug–disease, dose-range and duplicate-therapy alerting.**
 Real contributors to alert burden, deliberately out of scope. This project is
@@ -210,15 +225,15 @@ total CDS burden.
 **Gini coefficients and Pareto formalism.** "90 pairs generate 80% of alerts" is
 legible to a pharmacy lead in one reading. A Gini coefficient is decoration.
 
-**A `.pbix` in the repo.** Power BI Desktop is not installed on the machine this
-was built on. Rather than claim a deliverable that is not here, the Streamlit app
-is the runnable dashboard and
+**A `.pbix` in the repo.** This repository contains no Power BI file. The
+Streamlit app is the runnable dashboard, and
 [`dashboard/POWERBI_DATA_CONTRACT.md`](dashboard/POWERBI_DATA_CONTRACT.md)
-specifies exactly what a `.pbix` binds to.
+specifies exactly what a `.pbix` would bind to, so the dashboard layer is
+specified but not shipped in that form.
 
 ---
 
-## 6. The evaluation problem
+## 7. The evaluation problem
 
 This is the section that matters. A project about alert reliability that is
 vague about its own reliability undercuts itself.
@@ -242,14 +257,51 @@ is a statement about the 82% DDInter can see.
 realised alert set**, because the drugs this cohort co-prescribes are
 disproportionately ungraded. It is reported as its own tier throughout.
 Folding it into `Minor` would have suppressed over half the alerts on no
-evidence and handed Policies B and C a large, flattering burden reduction that
-was an artefact of grading gaps.
+evidence and handed the severity-routing policies (B and C) a large, flattering
+burden reduction that was an artefact of grading gaps.
 
 **No override data exists.** The findings that motivate this project — override
 rates ranging from 46% to 96% depending on setting, and the inappropriate
 minority of overrides carrying ~6× the adverse event rate of the appropriate
-majority ([section 2](#2-the-problem)) — cannot be reproduced or tested here.
+majority ([section 3](#3-the-problem)) — cannot be reproduced or tested here.
 There is no clinician response to observe.
+
+### The effective sample size is far smaller than the headline counts
+
+**This is the caveat that bounds every other number in the repository.** The
+cohort counts — 36,929 alerts, 951 prescribed-for patients, 524 of them alerting —
+are counts of rows and people, not of independent observations, and the gap
+between the two is extreme.
+
+| | Headline count | Effective independent clusters |
+|---|---:|---:|
+| All alerts | 36,929 across 524 patients | **≈28.5** |
+| `Major` alerts | 1,938 across 55 patients | **≈3.2** |
+
+The effective figures are Kish's ∑m² measure over per-patient alert counts, which
+is the number of equally-sized patients that would carry the same information.
+The concentration driving them:
+
+- One patient contributes **4,375 of 36,929 alerts (11.8%)**.
+- All 1,938 `Major` alerts come from **55 of the 524 alerting patients**. A
+  **single patient holds 1,050 of them — 54.2%**; the top five hold **73.0%**. The
+  median among those 55 patients is 10.
+
+**What this means for how much weight any estimate here can carry.** Every
+quantity keyed to the `Major` label — the AUC, net benefit, the Major-retention
+percentages, and every subgroup comparison — rests on the prescribing history of
+a few dozen simulated patients, and substantially on one of them. The
+patient-clustered bootstrap handles that dependence correctly in the *intervals*
+(which is why they are wide and skewed), but it cannot manufacture information
+that is not in the data. A reader who takes "524 patients" or "1,938 Major
+alerts" as the sample size behind a figure will overread it, and none of the
+point estimates here support three significant figures.
+
+The headline comparison survives this, and is reported because it does: Policy B
+retained 84.6–96.6% of `Major` alerts across bootstrap resamples against Policy
+D's 19.9–62.0%, which do not overlap. The finer results do not survive it, and
+are not leaned on — the 0.539 AUC and the per-subgroup orderings are consistent
+with the conclusion rather than independent evidence for it.
 
 ### The burden figure moves by 2× on one assumption
 
@@ -283,9 +335,10 @@ far more than it inflates what matters.
 
 ### What net benefit means here, and what it does not
 
-Stage 8 uses decision curve analysis because it is the framework that
-**explicitly trades false positives against false negatives across a range of
-thresholds** — which is literally the alert-fatigue problem.
+The net-benefit analysis in [`R/evaluation.R`](R/evaluation.R) uses decision curve
+analysis because it is the framework that **explicitly trades false positives
+against false negatives across a range of thresholds** — which is literally the
+alert-fatigue problem.
 
 ```
 NB(p_t) = TP/n − (FP/n) × (p_t / (1 − p_t))
@@ -323,7 +376,7 @@ package so the term stays visible.
 
 ---
 
-## 7. Can a simple rule outperform the complex policy?
+## 8. Can a simple rule outperform the complex policy?
 
 **No. The simple rule wins decisively, and that is the finding.**
 
@@ -332,7 +385,7 @@ package so the term stays visible.
 | **A** | Alert everything — every known interaction |
 | **B** | Severity-only — `Major` interrupts, `Moderate`/`Unknown` passive, `Minor` batched |
 | **C** | Frequency suppression — B plus batching of repeats within 90 days and top-10 pairs, `Major` always survives |
-| **D** | Context-aware — ranks on patient features only; severity excluded by the leakage rule |
+| **D** | Context-aware — ranks on patient features only (polypharmacy, age, renal status, repeat count). Severity is excluded by construction: it is the evaluation label, so using it as a feature would be target leakage. [`eval/criteria.md`](eval/criteria.md) §3 states the rule and `src/prioritisation/features.py` enforces it as a build failure, not a warning. |
 
 The success condition was **fixed in writing before any policy code was
 written**: D beats B only by retaining **≥5 percentage points more Major alerts
@@ -374,6 +427,18 @@ Confirmed independently in R:
   chance. (A naive logistic regression gives p = 0.00057; treating 36,929 alerts
   from 524 patients as independent is what produces that. **The clustered
   interval is the one that counts.**)
+  - **That interval is genuinely asymmetric, and it is not a typo.** The point
+    estimate is computed on the full alert set; the interval is the 2.5/97.5
+    percentile of the patient-clustered bootstrap, so the two are not required
+    to be concentric. The point estimate sits at roughly the **57th percentile**
+    of the bootstrap distribution (median 0.523), so it is not anomalously
+    placed — the distance to the upper bound is short because the distribution
+    is left-skewed, not because the estimate is wrong. The skew has a cause, and
+    it is a larger problem than the interval it produces: the `Major` label is
+    concentrated in a handful of patients, so resampling patients sometimes
+    draws a cohort with almost none. See
+    [the effective sample size](#the-effective-sample-size-is-far-smaller-than-the-headline-counts),
+    which bounds this estimate and every other one here.
 - **Net benefit −0.0126 (95% CI −0.0226 to −0.0002)** — D is worse than
   interrupting nobody.
 - Calibration is **hump-shaped**, and the top-scoring decile sits *below* the
@@ -396,11 +461,11 @@ none of those and lost on the numbers as well.
 Whether a severity rule would be appropriate for clinical deployment is a
 question this evaluation cannot answer. It would require real prescribing data,
 real override logs and outcome linkage — see
-[section 9](#9-what-would-be-needed-for-real-use).
+[section 10](#10-what-would-be-needed-for-real-use).
 
 ---
 
-## 8. The alert budget and the safety–burden frontier
+## 9. The alert budget and the safety–burden frontier
 
 ![Safety-burden frontier](outputs/safety_burden_frontier.png)
 
@@ -448,7 +513,7 @@ filter, KPI cards, the frontier, and top alert-generating pairs.
 
 ---
 
-## 9. What would be needed for real use
+## 10. What would be needed for real use
 
 Nothing here is deployment-ready, and nothing here demonstrates clinical
 validity.
@@ -468,15 +533,14 @@ validity.
    several that disagree. Agreement between them is itself a prioritisation
    signal.
 6. **Prospective evaluation.** Every result here is retrospective on synthetic
-   data. The post-hoc observation that 1,938 Major alerts arise from just **78
-   distinct (patient, pair) combinations** — so even Policy B's interrupts are
-   ~96% re-notification — suggests a "notify once, then go passive" policy worth
-   testing prospectively. It is *not* evaluated here, because devising it after
-   seeing the results is exactly the tuning `eval/criteria.md` forbids.
+   data. The "notify once, then go passive" policy that these results suggest
+   ([section 5](#5-the-burden-the-policies-were-measured-against)) is the obvious
+   candidate and is deliberately not evaluated here, because devising a policy
+   after seeing the results is exactly the tuning `eval/criteria.md` forbids.
 
 ---
 
-## 10. Reproducing this
+## 11. Reproducing this
 
 ### Requirements
 
@@ -511,10 +575,11 @@ cannot simply be lifted into a commercial product.
 ### Run it
 
 ```bash
-# 1. Generate the cohort. This exact command reproduces the dataset.
+# 1. Generate the cohort.
 #    -s seeds the population, -cs seeds clinician generation.
-#    Produces 1,127 patients (1,000 living + 127 deceased); 951 of them
-#    receive a prescription inside the 2021-2026 analysis window.
+#    Produced 1,127 patients (1,000 living + 127 deceased) on 2026-09-07; 951
+#    of them receive a prescription inside the 2021-2026 analysis window.
+#    See the note below: the living count reproduces, the total does not.
 java -jar synthea-with-dependencies.jar \
   -p 1000 -s 42 -cs 42 \
   --exporter.baseDirectory ./data/raw/synthea \
@@ -537,8 +602,8 @@ python src/ingest/map_ingredients.py     # RxNorm -> DDInter bridge
 # 4. Pipeline
 python src/ingest/build_db.py
 python src/alerts/generate_alerts.py     # Policy A + overlap sensitivity
-python src/burden/burden_analysis.py     # Stage 4 headline
-python src/prioritisation/features.py    # patient context, leakage-checked
+python src/burden/burden_analysis.py     # burden headline figures
+python src/prioritisation/features.py    # patient context; asserts no severity leakage
 python src/prioritisation/policies.py    # the four policies
 python src/prioritisation/evaluate.py    # budget table + frontier
 
@@ -558,6 +623,21 @@ Rscript R/evaluation.R
 **Seeds: `-s 42` (population), `-cs 42` (clinicians), `SEED = 42` in
 `policies.py`, `set.seed(42)` in `evaluation.R`.**
 
+⚠️ **The 1,127 total is a property of this run, not of the command.** `-p 1000`
+reliably fixes the *living* population at exactly 1,000; the deceased tail does
+not reproduce, because Synthea simulates up to the date you run it, so whether a
+given seeded patient has died by then moves with the calendar. The same command
+on the jar in the sibling
+[fhir-omop-data-quality](https://github.com/suparnaperumal11/fhir-omop-data-quality)
+repository now returns 1,164 (1,000 living + 164 deceased); forcing the reference
+date back to 2026-09-07 returns 1,109. That sibling repository quotes **1,112**
+for seed 42. Both cohorts were generated on 2026-09-07, so the run date does not
+by itself account for that gap; the likeliest remaining cause is a different
+Synthea build, as the jar available now reproduces neither figure. Two candidate
+explanations were tested directly and ruled out: the `-cs` clinician seed and the
+export format (CSV or FHIR) both leave the population identical. Treat the living
+count as reproducible and the total as a snapshot of this cohort.
+
 ⚠️ **`fetch_ddinter.py` downloads all 14 ATC-letter files, not the 8 the
 DDInter download page links.** C, G, J, M, N and S are served from the same URL
 pattern but advertised nowhere. N and C are the two largest and cover most of
@@ -569,7 +649,7 @@ relevant interactions and nothing in the output looks wrong.
 ```
 src/ingest/          Synthea, DDInter, RxNorm, DuckDB build
 src/alerts/          Layer 1 -- knowledge-based detection (Policy A)
-src/burden/          Stage 4 burden analysis
+src/burden/          burden analysis: alerts per patient-prescribing-day
 src/prioritisation/  Layer 2 -- features, policies, evaluation
 R/evaluation.R       Calibration, decision curve analysis, subgroups
 eval/criteria.md     Thresholds, fixed before any prioritisation code

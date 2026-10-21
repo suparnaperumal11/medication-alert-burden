@@ -66,10 +66,31 @@ staged.
 
 `-s 42` seeds the population, `-cs 42` seeds clinician generation. The earlier
 project set only `-s`; adding `-cs` makes provider assignment reproducible too,
-which matters here because providers are a candidate denominator. Consequence:
-this cohort is **1,127 patients** where the earlier `-s 42`-only run produced
-1,112. The populations are not identical and should not be compared across
-projects.
+which matters here because providers are a candidate denominator.
+
+**Why this cohort is 1,127 patients and the earlier `-s 42` run was 1,112 — it is
+not the `-cs` flag.** That was the original assumption here and it is wrong.
+Tested directly on the same jar: `-p 1000 -s 42` and `-p 1000 -s 42 -cs 42`
+return byte-identical population totals (1,164 / 1,000 living / 164 deceased on
+both), differing only in the clinician RNG draw count. Export format is not the
+cause either — a CSV run and a FHIR run of the same seed produce the same 1,164
+patients, and the FHIR directory's extra two files are `hospitalInformation` and
+`practitionerInformation`, which is also what makes the earlier project's "1,114
+bundles" the same thing as its 1,112 patients.
+
+What does move the total is **the date the generator is run**. Synthea simulates
+forward to the current date, so whether a given seeded patient has died by the
+end of the run depends on the calendar. `-p` fixes the *living* population at
+exactly 1,000 in every run; the deceased tail is what drifts. Forcing the
+reference date back to 2026-09-07 (`-r 20260907 -e 20260907`) returns 1,109
+rather than 1,164, which is the right neighbourhood for the 1,112 the earlier
+project recorded on that date.
+
+That leaves the 1,112-against-1,127 gap between two runs on the same day not
+fully accounted for — most likely a different Synthea build, since the jar now in
+the repo reproduces neither figure. The operational conclusion is the part that
+matters: **the living count is reproducible, the total is not.** The populations
+are not identical and should not be compared across projects.
 
 **Cohort as generated:** 1,127 patients (1,000 alive, 127 deceased), 58,803
 prescriptions, 65,896 encounters, 817 providers, 817 organizations.
