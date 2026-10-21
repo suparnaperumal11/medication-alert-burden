@@ -779,3 +779,70 @@ D still loses to arbitrary selection at every budget below 10.
 - Working tree clean; no `CLAUDE.md`, as required
 - Full pipeline re-runs end to end and reproduces every committed figure
 
+
+---
+
+## Stage 12 — Citation verification against primary sources
+
+Section 2 of the README carried four figures with no sources, taken from
+summarised web search results. Checking them against the primary literature
+changed two of them.
+
+**Method, because it is the part that mattered.** Search summaries and
+small-model page reads were not trusted. Every figure was resolved to a
+PubMed record and its abstract pulled from NCBI eutils
+(`efetch.fcgi?db=pubmed&rettype=abstract`), which returns the publisher's own
+text. This was not paranoia: two separate automated reads of the same Nanji
+2014 paper returned contradictory numbers for drug–drug interaction override
+appropriateness, and the primary abstract showed that the 12% figure one of
+them reported belongs to **renal recommendations**, not DDI. A third read
+attributed a DDI-specific override range of 56.3%–95.6% to Poly et al.; the
+abstract gives 46.2%–96.2% for override rates across all alert types. Neither
+error was detectable from the output alone.
+
+### What survived
+
+| Figure | Outcome |
+|---|---|
+| 88.2% of very severe DDI alerts overridden, 38,409 alerts | **Verified exactly.** Van De Sijpe et al. 2022, *BMC Med Inform Decis Mak* 22(1):48. |
+| ~6× adverse events after inappropriate overrides | **Verified exactly.** Wong et al. 2018, *BMJ Qual Saf* 27(9):718–24: 16.5 vs 2.74 per 100 overridden alerts, adjusted OR 6.14 (95% CI 4.63–7.71). The paper's own wording is "six times as likely". |
+| Single pair = 49.8% of alerts, 92.2% overridden | **Verified but misdescribed** — see Stage 12b. |
+| >90% of DDI alerts are overridden | **Not supported as stated.** |
+
+### The two that did not survive
+
+**">90% of DDI alerts are overridden" is not a stable fact.** Poly et al. 2020
+(*JMIR Med Inform* 8(7):e15653), reviewing 23 studies, reports average override
+rates of 46.2%–96.2%. Individual DDI measurements range from 60.2% (Nanji 2014,
+outpatient) through 88.2% (Leuven, very severe) and 89.4% (Weingart 2003,
+high-severity) to 95.1% (Bryant 2014). The claim is true at the top of that
+range and false at the bottom. Replaced with the range, which is the better
+setup anyway: a problem that varies by a factor of two across settings is an
+argument for context-dependent prioritisation, which is what this project is
+about. A single hardened number was never doing that work.
+
+**"More than half of overrides are inappropriate" is backwards.** Every source
+found points the other way: 53% of outpatient overrides appropriate (Nanji
+2014), ~60% of inpatient (Nanji 2018), **81.6% in the ICU study that the 6×
+figure itself comes from** (Wong 2018). The original sentence placed that 6×
+figure next to a claim its own source contradicts.
+
+The corrected framing is stronger than the original. Most overrides *are*
+appropriate — which is exactly why suppressing alerts looks attractive — and
+the inappropriate minority carries ~6× the ADE rate. That concedes the
+counter-argument and then defeats it, rather than asserting a number a reader
+can check and lose confidence over.
+
+**Both claims do appear in published introductions**, cited to other work. The
+citation chain does not hold up. Secondary citation was the failure mode, and
+going to primaries is what caught it.
+
+### `eval/criteria.md` is deliberately left wrong
+
+§2.4 of `eval/criteria.md` repeats both unsupported claims. It is **not
+edited.** That file's own rule is that nothing in it may be relaxed after the
+fact and that corrections are recorded here with the original left visible in
+history. Editing a pre-registration document to match what was later learned
+would destroy the only property that makes it worth committing. The claims in
+it are wrong, this entry is the correction, and the README's section 2 is the
+version to read.

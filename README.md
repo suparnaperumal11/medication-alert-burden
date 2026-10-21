@@ -23,20 +23,74 @@ prescribing data.
 
 ## 2. The problem
 
-Over 90% of drug–drug interaction alerts are overridden. In one large teaching
-hospital, **88.2% of *very severe* DDI alerts were overridden** across 38,409
-alerts. The obvious conclusion — that the alerts are wrong and should be
-suppressed — is not supported by the evidence.
+Override rates for medication-related alerts are high and vary enormously by
+setting: a systematic review of 23 studies found average override rates of
+**46.2%–96.2%** [1]. For DDI alerts specifically, one large teaching hospital
+system measured **95.1%** [2], and another found **88.2% of *very severe* DDI
+alerts overridden** across 38,409 alerts [3]. The obvious conclusion — that the
+alerts are wrong and should be suppressed — is not supported by the evidence.
 
-Clinicians deem most alerts not clinically significant, yet **more than half of
-overrides are themselves inappropriate**, and inappropriate overrides carry
-roughly **six times more adverse drug events**. Both the alerting and the
-overriding are unreliable. Published causes are consistent: screening intervals
-too broad, and failure to incorporate patient-specific characteristics. One
-hospital found a **single drug pair generating 49.8% of all alerts**, 92.2% of
-them overridden.
+Most overrides are judged **appropriate** on chart review — about **60% of
+inpatient** [4] and **53% of outpatient** overrides [5] — which is precisely why
+suppressing alerts looks tempting. But the minority that are inappropriate carry
+roughly **six times the adverse drug event rate**: 16.5 against 2.74 potential
+and definite ADEs per 100 overridden alerts, adjusted OR 6.14 (95% CI
+4.63–7.71) [6]. DDI alerts are among the categories where override
+appropriateness is worst [1]. So both the alerting and the overriding are
+unreliable, and the cost of the unreliable minority is not small.
+
+Published causes are consistent: screening intervals too broad, and failure to
+incorporate patient-specific characteristics [3]. The Leuven study found a
+**single pair — a non-vitamin K oral anticoagulant with a low molecular weight
+heparin — generating 49.8% of its very severe alerts**, 92.2% of them
+overridden [3].
 
 So the problem is not detection. It is allocation of a finite resource.
+
+### Sources for the figures above
+
+Every figure in this section was checked against the primary source, and the
+numbers each source actually supports are stated so the claim can be traced
+without re-reading the paper. Two figures that appeared in an earlier draft of
+this section — "over 90% of DDI alerts are overridden" and "more than half of
+overrides are inappropriate" — did not survive that check and were replaced by
+what the sources say; see [`NOTES.md`](NOTES.md).
+
+1. Poly TN, Islam MM, Yang HC, Li YJ. Appropriateness of overridden alerts in
+   computerized physician order entry: systematic review. *JMIR Med Inform*.
+   2020;8(7):e15653. [doi:10.2196/15653](https://doi.org/10.2196/15653) —
+   23 studies; average override rates 46.2%–96.2%; override appropriateness by
+   alert type, drug–drug interaction 0%–95%.
+2. Bryant AD, Fletcher GS, Payne TH. Drug interaction alert override rates in
+   the Meaningful Use era: no evidence of progress. *Appl Clin Inform*.
+   2014;5(3):802–13.
+   [doi:10.4338/ACI-2013-12-RA-0103](https://doi.org/10.4338/ACI-2013-12-RA-0103)
+   — DDI override rate 95.1%, against 90.9% for drug–allergy alerts.
+3. Van De Sijpe G, Quintens C, Walgraeve K, et al. Overall performance of a
+   drug–drug interaction clinical decision support system: quantitative
+   evaluation and end-user survey. *BMC Med Inform Decis Mak*. 2022;22(1):48.
+   [doi:10.1186/s12911-022-01783-z](https://doi.org/10.1186/s12911-022-01783-z)
+   — University Hospitals Leuven, 2019–2021; 38,409 very severe DDI alerts,
+   88.2% overridden; NOAC + LMWH 19,143/38,409 (49.8%), 92.2% overridden;
+   false positives attributed to a 14-day screening interval and absent
+   patient-specific characteristics such as QTc.
+4. Nanji KC, Seger DL, Slight SP, et al. Medication-related clinical decision
+   support alert overrides in inpatients. *J Am Med Inform Assoc*.
+   2018;25(5):476–81.
+   [doi:10.1093/jamia/ocx115](https://doi.org/10.1093/jamia/ocx115) — 73.3% of
+   alerts overridden; about 60% of overrides appropriate.
+5. Nanji KC, Slight SP, Seger DL, et al. Overrides of medication-related
+   clinical decision support alerts in outpatients. *J Am Med Inform Assoc*.
+   2014;21(3):487–91.
+   [doi:10.1136/amiajnl-2013-001813](https://doi.org/10.1136/amiajnl-2013-001813)
+   — 157,483 alerts, 52.6% overridden; 53% of overrides appropriate.
+6. Wong A, Amato MG, Seger DL, et al. Prospective evaluation of
+   medication-related clinical decision support over-rides in the intensive
+   care unit. *BMJ Qual Saf*. 2018;27(9):718–24.
+   [doi:10.1136/bmjqs-2017-007531](https://doi.org/10.1136/bmjqs-2017-007531)
+   — ICU, and **all** medication-related alert types, not DDI alone; 81.6% of
+   overrides were appropriate; inappropriate overrides six times as likely to
+   be associated with potential and definite ADEs.
 
 ## 3. The decision this supports
 
@@ -173,10 +227,11 @@ Folding it into `Minor` would have suppressed over half the alerts on no
 evidence and handed Policies B and C a large, flattering burden reduction that
 was an artefact of grading gaps.
 
-**No override data exists.** The finding that motivates this project — that
->90% of alerts are overridden but >half of overrides are inappropriate at ~6×
-the adverse event rate — cannot be reproduced or tested here. There is no
-clinician response to observe.
+**No override data exists.** The findings that motivate this project — override
+rates ranging from 46% to 96% depending on setting, and the inappropriate
+minority of overrides carrying ~6× the adverse event rate of the appropriate
+majority ([section 2](#2-the-problem)) — cannot be reproduced or tested here.
+There is no clinician response to observe.
 
 ### The burden figure moves by 2× on one assumption
 
