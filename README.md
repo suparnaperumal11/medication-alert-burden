@@ -247,15 +247,19 @@ any prioritisation code existed):
 **It grades pairs, not situations.** A `Major` pair is major in general — not
 major for this patient, at this dose, on this day.
 
-**Coverage gaps cap everything.** 18.0% of ingredient-prescriptions involve
-drugs absent from DDInter and can never alert under any policy. The largest is
-**epoetin alfa at 8,760 prescriptions — the single most-prescribed product in
-the cohort, with zero interaction coverage.** Every "total burden" figure here
-is a statement about the 82% DDInter can see.
+**Coverage gaps cap everything.** **12,310 of 68,505 ingredient-prescription
+rows (18.0%)** involve drugs absent from DDInter and can never alert under any
+policy — the denominator is ingredient-prescription rows rather than the 58,803
+prescriptions, because a combination product contributes one row per
+ingredient. The largest is **epoetin alfa at 8,760 rows — the single
+most-prescribed product in the cohort, with zero interaction coverage.** Every
+"total burden" figure here is a statement about the remaining 56,195 rows
+(82.0%) DDInter can see.
 
-**`Unknown` is not a low-severity grade.** It is 18% of DDInter but **56% of the
-realised alert set**, because the drugs this cohort co-prescribes are
-disproportionately ungraded. It is reported as its own tier throughout.
+**`Unknown` is not a low-severity grade.** It is **42,415 of DDInter's 234,981
+distinct drug pairs (18.05%)** but **20,681 of the 36,929 realised alerts
+(56.0%)**, because the drugs this cohort co-prescribes are disproportionately
+ungraded. It is reported as its own tier throughout.
 Folding it into `Minor` would have suppressed over half the alerts on no
 evidence and handed the severity-routing policies (B and C) a large, flattering
 burden reduction that was an artefact of grading gaps.
