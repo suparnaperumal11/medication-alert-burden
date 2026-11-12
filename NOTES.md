@@ -907,3 +907,44 @@ the output could have revealed it — the error was in what the numbers were
 The habit that caught all four is unchanged: check a number against a
 different number that should agree with it, and state the denominator every
 time, so that a mismatch is visible rather than inferable.
+
+---
+
+## Stage 13 — R helpers extracted into `R/utils.R`, and what the tests found
+
+### Do the tests fail when the code is wrong?
+
+Each helper was broken one line at a time and the suite re-run. Eight breaks
+across the three functions each fail at least two tests. The table below is
+eight breaks to `wilson_ci` alone, and whether the `prop.test` cross-check
+catches each one by itself:
+
+| Break to `wilson_ci` | `prop.test` check | Tests failing |
+|---|---|---:|
+| `z^2/(4n^2)` → `z^2/(4n)` | caught | 3 |
+| Wald centre (`centre <- p`) | caught | 3 |
+| default `z = 1.645` | **missed** | 2 |
+| `denom` uses `z^2/(2n)` | caught | 4 |
+| `centre` uses `z^2/n` | caught | 5 |
+| `halfw` drops `/ denom` | caught | 3 |
+| `p(1-p)` → `p(1+p)` | caught | 3 |
+| drop the lower clip | **missed** | 1 |
+
+Both misses are structural, not gaps. The cross-check passes
+`z = qnorm(0.975)` explicitly, because that is what `prop.test` uses and it is
+not 1.96, so it cannot see the default; the closed-form k = 0 and k = n tests
+can. Dropping the clip lets through roughly −1e-17 at k = 0, inside the 1e-12
+tolerance; the [0, 1] containment test catches it.
+
+The first version of the grid tried k = 2 at n = 1, so `prop.test` errored on
+every run and every break looked caught. A mutation check that reports 8 of 8
+should be read as suspect until the unmutated suite is shown to pass.
+
+### `wilson_ci` does not round inward at k = n
+
+At k = n the upper limit can come out as `1 - 1.1e-16` rather than 1: 308 of
+n = 1..1000. At k = 0 the lower limit is a hair above 0 in 84 of them. The
+`max`/`min` clip keeps limits inside [0, 1] but cannot push them back out to
+the boundary. No output of this project is affected. The logic was left
+unchanged, because the extraction was required to be byte-identical; the
+roxygen text now says so and the bracketing test allows 1e-12.

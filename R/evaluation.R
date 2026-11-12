@@ -23,6 +23,8 @@ suppressPackageStartupMessages({
   library(ggplot2)
 })
 
+source("R/utils.R")   # auc_from_ranks, wilson_ci, net_benefit
+
 set.seed(42)
 
 OUT <- "outputs"
@@ -50,16 +52,7 @@ CAPTION <- paste0(
 
 # =============================================================================
 # 1. DISCRIMINATION -- does Policy D's score separate Major from non-Major?
-#
-# From ranks rather than a package call, so the reported quantity stays explicit.
 # =============================================================================
-
-auc_from_ranks <- function(score, label) {
-  r <- rank(score)
-  n_pos <- sum(label == 1)
-  n_neg <- sum(label == 0)
-  (mean(r[label == 1]) - (n_pos + 1) / 2) / n_neg
-}
 
 auc_d <- auc_from_ranks(alerts$score_D_scaled, alerts$is_major)
 cat(sprintf("\nPolicy D score AUC vs Major: %.4f  (0.5 = no discrimination)\n", auc_d))
@@ -77,16 +70,7 @@ cat("  small; the clustered bootstrap below is the inference that counts.\n")
 # 2. CALIBRATION against the stated reference standard
 #
 # Decile bins, not a loess smoother: a smoother invites structure to be read into noise.
-# Wilson intervals are more stable than Wald at low Major prevalence.
 # =============================================================================
-
-wilson_ci <- function(k, n, z = 1.96) {
-  p <- k / n
-  denom  <- 1 + z^2 / n
-  centre <- (p + z^2 / (2 * n)) / denom
-  halfw  <- z * sqrt(p * (1 - p) / n + z^2 / (4 * n^2)) / denom
-  c(lower = max(0, centre - halfw), upper = min(1, centre + halfw))
-}
 
 calib <- alerts |>
   mutate(bin = ntile(score_D_scaled, 10)) |>
@@ -151,12 +135,6 @@ ggsave(file.path(OUT, "r_calibration.png"), p_cal,
 # analyst is claiming a willingness-to-be-interrupted above the base rate, and
 # every strategy falls below "interrupt none".
 # =============================================================================
-
-net_benefit <- function(interrupt, is_major, p_t, n = length(is_major)) {
-  tp <- sum(interrupt == 1 & is_major == 1)
-  fp <- sum(interrupt == 1 & is_major == 0)
-  tp / n - (fp / n) * (p_t / (1 - p_t))
-}
 
 thresholds <- seq(0.01, 0.30, by = 0.005)
 

@@ -353,7 +353,7 @@ probability of a Major interaction at which an interruption is worth it, and
 `p_t/(1−p_t)` is the **exchange rate**: at `p_t = 0.05` the analyst is stating
 that one missed Major is worth nineteen needless interruptions. That term is the
 whole argument for DCA over accuracy, which fixes an exchange rate silently. It
-is hand-written in [`R/evaluation.R`](R/evaluation.R) rather than called from a
+is hand-written in [`R/utils.R`](R/utils.R) rather than called from a
 package so the term stays visible.
 
 **What it does not mean:**
@@ -656,6 +656,10 @@ src/alerts/          Layer 1 -- knowledge-based detection (Policy A)
 src/burden/          burden analysis: alerts per patient-prescribing-day
 src/prioritisation/  Layer 2 -- features, policies, evaluation
 R/evaluation.R       Calibration, decision curve analysis, subgroups
+R/utils.R            auc_from_ranks, wilson_ci, net_benefit -- documented, data-free
+tests/testthat/      Tests for R/utils.R: Rscript -e 'testthat::test_dir("tests/testthat")'
+                     Needs testthat; pROC for the AUC cross-check (skipped if absent):
+                     install.packages(c("testthat", "pROC"))
 eval/criteria.md     Thresholds, fixed before any prioritisation code
 dashboard/           Streamlit simulator + Power BI data contract
 outputs/             Committed derived tables and figures
